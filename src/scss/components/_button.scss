@@ -5,9 +5,9 @@
   border-radius: 25px;
   padding: 0.8rem 1.5rem;
   font-size: 0.85rem;
-  max-width:20em;
-  white-space:nowrap;
-  overflow:hidden;
+  max-width: 20em;
+  white-space: nowrap;
+  overflow: hidden;
   &-full {
     width: 100%;
   }
@@ -15,7 +15,7 @@
     border: none;
     color: #ffffff;
     background-color: $primary;
-    a{
+    a {
       color: inherit;
     }
     i {
@@ -27,13 +27,13 @@
     }
     &:hover {
       text-decoration: none;
-      background-color: darken($primary, 10%)!important;
+      background-color: darken($primary, 10%) !important;
     }
   }
   &-outline {
     border-radius: 25px;
     border: 1px solid $primary;
-    a{
+    a {
       color: inherit;
     }
     i {
@@ -45,9 +45,9 @@
     }
     &:hover {
       text-decoration: none;
-      background-color: $primary!important;
+      background-color: $primary !important;
       border: 1px solid $primary;
-      color: $white!important;
+      color: $white !important;
     }
   }
 }

@@ -265,7 +265,7 @@ add_filter('upload_mimes', 'add_file_types_to_uploads');
 
 function add_animate_css()
 {
-	wp_enqueue_style('animate', 'dis/assets/vendor/animate.css?v3.5.1');
+	wp_enqueue_style('animate', get_template_directory_uri() . '/dist/assets/vendor/animate.css');
 
 }
 add_action('wp_enqueue_scripts', 'add_animate_css');

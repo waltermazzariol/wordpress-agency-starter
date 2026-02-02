@@ -1,8 +1,8 @@
 .wp-block-latest-posts {
   &__list {
-      a{
-          font-size: $h4-font-size;
-      }
+    a {
+      font-size: $h4-font-size;
+    }
   }
   &__featured-image {
     position: relative;
@@ -11,19 +11,19 @@
     overflow: hidden;
     border-radius: 0.25rem;
     transition: 0.3s;
-    &:hover{
+    &:hover {
       top: 5px;
       filter: brightness(80%);
       transition: 0.3s;
-  }
+    }
     img {
       position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center center;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
     }
   }
 }
@@ -31,8 +31,8 @@
 .widget .wp-block-latest-posts {
   &__list {
     list-style: initial;
-      a{
-          font-size: $font-size-base;
-      }
+    a {
+      font-size: $font-size-base;
+    }
   }
 }

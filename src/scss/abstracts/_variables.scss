@@ -30,22 +30,18 @@
   font-display: swap;
 }
 
-$light-gray:                  #dbdbdb;
 $gray-100:                    #f7f7f7;
 $gray-200:                    #e4e4e4;
-$gray-900:                    #30302e;
-$red:                         #f05555;
+$gray-300:                    #dbdbdb;
+$light-black:                 #333333;
 $dark-black:                  #1B1B1B;
-$light-black:                #333333;
-$orange:                      #f4623a;
-$blue:                        #03a9f4;
 $white:                       #FFFFFF;
 $black:                       #000000;
 
 // Text Colors
-$header-color:                  $dark-black;
+$text-header-color:             $dark-black;
 $text-color-a:                  $dark-black;
-$text-color:                    $dark-black;
+$text-color:                    $light-black;
 $primary:                       $dark-black;
 $secondary:                     darken( $primary, 10% );
 
@@ -53,12 +49,9 @@ $theme-colors: (
   primary: $primary
 );
 
-// Font Family
-$font-family-roboto:            "Roboto", sans-serif;
-$font-family-natosans:          "Nato Sans", sans-serif;
-$font-family-opensans:          "Open Sans", sans-serif;
-$font-family-inter:             "Inter", sans-serif;
-$font-family-anton:             "Anton", sans-serif;
+// Font overrides
+$font-family-base: "Roboto", sans-serif !default;
+$headings-font-family: "Anton", sans-serif !default;
 
 // Font Size
 $font-size-base: 1rem;
@@ -117,23 +110,4 @@ $grid-breakpoints: (
   xxl: 1440px
 );
 
-// Font overrides
-$font-family-base: $font-family-roboto !default;
-$headings-font-family: $font-family-anton !default;
 
-// Custom variables
-$navbar-height: 60px;
-
-$text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
-$text-shadow-2: 0 1px 2px rgba(0, 0, 0, 0.5);
-
-$navbar-color: white;
-$navbar-cta-color: $primary;
-$navbar-cta-bg-color: $primary;
-$navbar-text-color: $primary;
-$navbar-text-color-hover: rgba(200, 200, 200, 0.2);
-$navbar-font-family: $font-family-base;
-
-
-$navbar-togle-collapse: white;
-$navbar-togle-collapse-line: #ddd;

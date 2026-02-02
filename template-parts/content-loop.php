@@ -42,11 +42,6 @@
 		</div><!-- .entry-meta -->
 		</header><!-- .entry-header -->
 		
-		<?php	if ( 'post' === get_post_type() ) :
-			?>
-		
-		<?php endif; ?>
-		
 	</div><!-- .entry-content -->
 
 </article><!-- #post-<?php the_ID(); ?> -->

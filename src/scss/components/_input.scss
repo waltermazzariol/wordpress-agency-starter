@@ -1,23 +1,23 @@
-.wp-block-search__inside-wrapper{
-    border: 1px solid $primary!important;
-    border-radius: 0.25rem!important;
-} 
+.wp-block-search__inside-wrapper {
+  border: 1px solid $primary !important;
+  border-radius: 0.25rem !important;
+}
 
 input {
-    overflow: visible;
-    padding: 1rem;
-    background: $white;
-    min-width: 250px;
-    &[type="submit"] {
-        min-width: 100px;
-    }
-    &.wpcf7-form-control.wpcf7-text {
-        background-color: $gray-100;
-        max-width: 90%;
-    }
+  overflow: visible;
+  padding: 1rem;
+  background: $white;
+  min-width: 250px;
+  &[type="submit"] {
+    min-width: 100px;
+  }
+  &.wpcf7-form-control.wpcf7-text {
+    background-color: $gray-100;
+    max-width: 90%;
+  }
 }
 textarea.wpcf7-form-control.wpcf7-textarea {
-    background-color: $gray-100;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    max-width: 90%;
+  background-color: $gray-100;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  max-width: 90%;
 }

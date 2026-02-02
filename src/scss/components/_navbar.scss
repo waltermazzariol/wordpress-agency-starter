@@ -1,3 +1,19 @@
+// Custom variables
+$navbar-height: 60px;
+
+$text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+$text-shadow-2: 0 1px 2px rgba(0, 0, 0, 0.5);
+
+$navbar-color: $white;
+$navbar-cta-color: $primary;
+$navbar-cta-bg-color: $primary;
+$navbar-text-color: $primary;
+$navbar-text-color-hover: rgba(200, 200, 200, 0.2);
+$navbar-font-family: $font-family-base;
+
+$navbar-toggle-collapse: $white;
+$navbar-toggle-collapse-line: $gray-300;
+
 // Base styling for the navbar
 #mainNav {
   min-height: $navbar-height;
@@ -59,7 +75,7 @@
       height: 100vh;
       transition: all 0.3s ease;
       display: block;
-      background-color: $navbar-togle-collapse;
+      background-color: $navbar-toggle-collapse;
       &.collapsing {
         margin-right: 50%;
         height: 100vh;
@@ -72,7 +88,7 @@
     }
     &-nav {
       .nav-item {
-        border-bottom: 1px solid $navbar-togle-collapse-line;
+        border-bottom: 1px solid $navbar-toggle-collapse-line;
         padding: 0.5rem 0 !important;
         font-size: 2rem;
       }
@@ -80,8 +96,8 @@
   }
 }
 
-.button-outline{
-  a.nav-link:hover{
-    color: $white!important;
+.button-outline {
+  a.nav-link:hover {
+    color: $white !important;
   }
 }

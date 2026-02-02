@@ -6,7 +6,7 @@
  CALCULATION: Element font size in rem x 16px;
  */
 
- // Body text
+// Body text
 // -------------------------
 
 body,
@@ -14,7 +14,7 @@ html {
   width: 100%;
   height: 100%;
   font-size: 1rem;
-  
+  color: $text-color;
 }
 h1,
 h2,
@@ -24,6 +24,7 @@ h5,
 h6 {
   font-family: $headings-font-family;
   line-height: 1.5em;
+  color: $text-header-color;
 }
 h1,
 h2,
@@ -70,10 +71,27 @@ p {
   margin: 0 0 10px;
   font-family: $font-family-base;
 }
- a {
+a {
   color: inherit;
   text-decoration: none;
-  &:hover{
-    text-decoration: none!important;
+  &:hover {
+    text-decoration: none !important;
+  }
 }
+
+.main-heading {
+  font-size: 2.6rem;
+  text-transform: uppercase;
+  font-family: $headings-font-family;
+  color: $text-header-color;
+  line-height: 1.15em;
+  font-weight: 400;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  @include media-breakpoint-up(md) {
+    font-size: 5rem;
+  }
+  @include media-breakpoint-up(lg) {
+    font-size: 8rem;
+  }
 }

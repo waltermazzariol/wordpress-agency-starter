@@ -1,98 +1,97 @@
-.card-loop{
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow: hidden;
-    .entry-featured{
-        position: absolute;
-        font-size: 0.70rem;
-        color: $primary;
-        background-color: $white;
-        border-radius: 5px;
-        padding: 5px;
-        top: 10px;
-        left: 10px;
-    }
-    .entry-cat{
-        font-size: 0.75rem;
-        color: $white;
-        padding: 0.3rem 0.8rem;
-        background-color: $light-black;
-        border-radius: 25px;
-    }
-    .entry-meta{
-        margin-top: 0.5rem;
-        color: $primary;
-        font-size: 0.75rem;
-    }
-    .entry-title{
-        margin-top: 0.5rem;
-    }      
-    .posted-on{
-        font-size: 0.9rem;
-    }
-    .byline{
+.card-loop {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  .entry-featured {
+    position: absolute;
+    font-size: 0.7rem;
+    color: $primary;
+    background-color: $white;
+    border-radius: 5px;
+    padding: 5px;
+    top: 10px;
+    left: 10px;
+  }
+  .entry-cat {
+    font-size: 0.75rem;
+    color: $white;
+    padding: 0.3rem 0.8rem;
+    background-color: $light-black;
+    border-radius: 25px;
+  }
+  .entry-meta {
+    margin-top: 0.5rem;
+    color: $primary;
+    font-size: 0.75rem;
+  }
+  .entry-title {
+    margin-top: 0.5rem;
+  }
+  .posted-on {
+    font-size: 0.9rem;
+  }
+  .byline {
     text-transform: capitalize;
     margin-right: 0.5rem;
     color: $light-black;
     font-weight: $font-weight-semibold;
     font-size: 0.9rem;
-    }
-    .reading-time{
+  }
+  .reading-time {
     margin-left: 7px;
     border-left: 1px solid rgba(211, 211, 211, 0.63);
     padding-left: 10px;
     font-size: 0.9rem;
-    }
+  }
 }
 
-.pagination{
-    width: 100%;
-    justify-content: center;
-    margin: 1.5rem auto;
-    .page-numbers{
-        background-color: $primary;
-        color: $white;
-        padding: 5px 15px;
-        &.current{
-            background-color: $gray-500;
-        }
+.pagination {
+  width: 100%;
+  justify-content: center;
+  margin: 1.5rem auto;
+  .page-numbers {
+    background-color: $primary;
+    color: $white;
+    padding: 5px 15px;
+    &.current {
+      background-color: $gray-300;
     }
+  }
 }
 
-  .box-loop {
+.box-loop {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  overflow: hidden;
+  transition: 0.3s;
+  &-square {
     position: relative;
     width: 100%;
-    padding-top: 56.25%;
+    padding-top: 100%;
     overflow: hidden;
     transition: 0.3s;
-    &-square{
-        position: relative;
-        width: 100%;
-        padding-top: 100%;
-        overflow: hidden;
-        transition: 0.3s;
-    }
-    &:hover{
-        top: 5px;
-        filter: brightness(80%);
-        transition: 0.3s;
-    }
-      &-image {
-        position: absolute;
-        top: 0;
-        object-fit: cover;
-        height: 100%;
-        width: 100%;
-      }
-      img{
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center center;
-      }
-    }
-
+  }
+  &:hover {
+    top: 5px;
+    filter: brightness(80%);
+    transition: 0.3s;
+  }
+  &-image {
+    position: absolute;
+    top: 0;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+  img {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+}

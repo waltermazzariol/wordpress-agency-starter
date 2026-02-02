@@ -13,10 +13,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 .site {
-  color: $primary;
+  color: $text-color;
   font-size: 1rem;
   text-align: left; 
-  border: 10px solid $light-gray;
+  border: 10px solid $gray-300;
   padding: 10px;
 }
 /**
