@@ -71,11 +71,37 @@ p {
   margin: 0 0 10px;
   font-family: $font-family-base;
 }
+
+// Accessible link styles
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 0.2s ease, color 0.2s ease;
+
   &:hover {
-    text-decoration: none !important;
+    text-decoration: underline;
+    text-decoration-color: currentColor;
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: 2px solid var(--color-accent, $primary);
+    outline-offset: 2px;
+  }
+}
+
+// Remove underline for navigation and button links
+.navbar a,
+.button a,
+.btn a,
+.nav-link,
+.portfolio-box,
+.card-loop a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
   }
 }
 
@@ -88,6 +114,15 @@ a {
   font-weight: 400;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
   @include media-breakpoint-up(md) {
     font-size: 5rem;
   }

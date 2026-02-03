@@ -22,8 +22,10 @@
       color: inherit;
       font-size: 1rem;
     }
-    &:focus {
-      outline: none;
+    &:focus,
+    &:focus-visible {
+      outline: 2px solid var(--color-accent, $primary);
+      outline-offset: 2px;
     }
     &:hover {
       text-decoration: none;
@@ -40,8 +42,10 @@
       color: inherit;
       font-size: 1rem;
     }
-    &:focus {
-      outline: none;
+    &:focus,
+    &:focus-visible {
+      outline: 2px solid var(--color-accent, $primary);
+      outline-offset: 2px;
     }
     &:hover {
       text-decoration: none;

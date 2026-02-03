@@ -32,12 +32,11 @@ $navbar-toggle-collapse-line: $gray-300;
     }
     &-toggler {
       border: none;
-      // &-icon {
-      //   background-image: url("../assets/images/menu.svg");
-      //   max-width: 85%;
-      // }
-      &:focus {
-        outline: none;
+      &:focus,
+      &:focus-visible {
+        outline: 2px solid var(--color-accent, $primary);
+        outline-offset: 2px;
+        box-shadow: none;
       }
     }
     &-nav {
@@ -54,6 +53,11 @@ $navbar-toggle-collapse-line: $gray-300;
           padding: 0.5rem 0.75rem;
           display: inline-block;
           position: relative;
+          &:focus,
+          &:focus-visible {
+            outline: 2px solid var(--color-accent, $primary);
+            outline-offset: 2px;
+          }
           &:hover,
           &:active {
             opacity: 1;

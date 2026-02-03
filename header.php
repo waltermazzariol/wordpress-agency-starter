@@ -19,6 +19,29 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 
+	<!-- Font preconnect for performance -->
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+	<!-- Open Graph Meta Tags -->
+	<meta property="og:title" content="<?php echo esc_attr(wp_get_document_title()); ?>">
+	<meta property="og:description" content="<?php echo esc_attr(get_bloginfo('description')); ?>">
+	<meta property="og:type" content="<?php echo is_single() ? 'article' : 'website'; ?>">
+	<meta property="og:url" content="<?php echo esc_url(get_permalink()); ?>">
+	<?php if (has_post_thumbnail()) : ?>
+	<meta property="og:image" content="<?php echo esc_url(get_the_post_thumbnail_url(null, 'large')); ?>">
+	<?php else : ?>
+	<meta property="og:image" content="<?php echo esc_url(get_template_directory_uri() . '/dist/assets/images/hero.jpg'); ?>">
+	<?php endif; ?>
+	<meta property="og:site_name" content="<?php echo esc_attr(get_bloginfo('name')); ?>">
+
+	<!-- Twitter Card Meta Tags -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="<?php echo esc_attr(wp_get_document_title()); ?>">
+	<meta name="twitter:description" content="<?php echo esc_attr(get_bloginfo('description')); ?>">
+	<?php if (has_post_thumbnail()) : ?>
+	<meta name="twitter:image" content="<?php echo esc_url(get_the_post_thumbnail_url(null, 'large')); ?>">
+	<?php endif; ?>
+
 	<?php wp_head(); ?>
 </head>
 

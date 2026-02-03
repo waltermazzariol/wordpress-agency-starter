@@ -187,9 +187,15 @@ add_action('wp_enqueue_scripts', 'wp_guarapo_scripts');
  */
 function _themename_assets()
 {
-	wp_enqueue_style('_themename-stylesheet', get_template_directory_uri() . '/dist/css/bundle.css', array(), '1.0.0', 'all');
+	$css_file = get_template_directory() . '/dist/css/bundle.css';
+	$js_file = get_template_directory() . '/dist/js/bundle.js';
 
-	wp_enqueue_script('_themename-scripts', get_template_directory_uri() . '/dist/js/bundle.js', array(), '1.0.0', true);
+	$css_ver = file_exists($css_file) ? filemtime($css_file) : '1.0.0';
+	$js_ver = file_exists($js_file) ? filemtime($js_file) : '1.0.0';
+
+	wp_enqueue_style('_themename-stylesheet', get_template_directory_uri() . '/dist/css/bundle.css', array(), $css_ver, 'all');
+
+	wp_enqueue_script('_themename-scripts', get_template_directory_uri() . '/dist/js/bundle.js', array(), $js_ver, true);
 }
 add_action('wp_enqueue_scripts', '_themename_assets');
 
@@ -351,14 +357,14 @@ function tthq_add_custom_fa_css()
     if ( ! empty( $accent_color ) ) {
       ?>
 	  	a:hover{
-			color: <?php echo $accent_color; ?>;
+			color: <?php echo esc_attr($accent_color); ?>;
 			text-decoration: underline;
 		}
 		.bg-primary{
-			background-color: <?php echo $accent_color; ?>!important;
+			background-color: <?php echo esc_attr($accent_color); ?>!important;
 		}
 		.pagination .page-numbers{
-				background-color: <?php echo $accent_color; ?>;
+				background-color: <?php echo esc_attr($accent_color); ?>;
 		}
 	
       <?php
@@ -370,11 +376,11 @@ function tthq_add_custom_fa_css()
     if ( ! empty( $footer_color ) ) {
       ?>
 	  	.footer{
-			background-color: <?php echo $footer_color; ?>;
-			color: <?php echo $footer_text_color; ?>;
+			background-color: <?php echo esc_attr($footer_color); ?>;
+			color: <?php echo esc_attr($footer_text_color); ?>;
 		}
 		.widget h4{
-			color: <?php echo $footer_text_color; ?>;
+			color: <?php echo esc_attr($footer_text_color); ?>;
 		}
       <?php
     }
@@ -403,11 +409,11 @@ add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
 function wpdocs_excerpt_more( $more ) {
     if ( ! is_single() ) {
         $more = sprintf( '<a class="read-more d-block" href="%1$s">%2$s</a>',
-            get_permalink( get_the_ID() ),
+            esc_url( get_permalink( get_the_ID() ) ),
             __( 'Leer más', 'textdomain' )
         );
     }
- 
+
     return $more;
 }
 add_filter( 'excerpt_more', 'wpdocs_excerpt_more' );
@@ -457,10 +463,10 @@ function reading_time() {
 
 // recent posts shortcode
 function guarapo_recent_posts_shortcode($atts, $content = null) {
-	
+
 	global $post;
-	
-	extract(shortcode_atts(array(
+
+	$atts = shortcode_atts(array(
 		'cat'     => '',
 		'num'     => '6',
 		'order'   => 'DESC',
@@ -468,16 +474,24 @@ function guarapo_recent_posts_shortcode($atts, $content = null) {
 		'square'  => 'false',
 		'metadata'=> 'true',
 		'col'     => '3'
-	), $atts));
-	
+	), $atts, 'recent_posts');
+
+	$cat      = $atts['cat'];
+	$num      = $atts['num'];
+	$order    = $atts['order'];
+	$orderby  = $atts['orderby'];
+	$square   = $atts['square'];
+	$metadata = $atts['metadata'];
+	$col      = $atts['col'];
+
 	$args = array(
 		'cat'            => $cat,
 		'posts_per_page' => $num,
 		'order'          => $order,
 		'orderby'        => $orderby,
-     	'square'    	 => $square,
+		'square'         => $square,
 		'metadata'       => $metadata,
-		'col'			=> $col
+		'col'            => $col
 	);
 	
 	$output = '';
@@ -499,14 +513,14 @@ function guarapo_recent_posts_shortcode($atts, $content = null) {
 		$output .='<article class="col-md-'.$col.' mb-3" id="post">
 						<div class="card-loop">
 							<div class="box-loop' . $feature_aspect . '">
-								<a href="'. get_the_permalink().'" class="box-loop-image">
+								<a href="'. esc_url(get_the_permalink()).'" class="box-loop-image">
 								<img class="box-loop-image"
-								src="' . $feature_post . '" alt="'.get_the_title().'" />
+								src="' . esc_url($feature_post) . '" alt="'.esc_attr(get_the_title()).'" />
 								</a>
 							 </div>
 							 <header class="entry-header">
 							 	<h3 class="entry-title">
-							 		<a href="' . get_the_permalink().'" rel="bookmark">'. get_the_title(). '</a>
+							 		<a href="' . esc_url(get_the_permalink()).'" rel="bookmark">'. esc_html(get_the_title()). '</a>
 								</h3>'. $meta .'
 							</header>
 						</div>
@@ -517,9 +531,9 @@ function guarapo_recent_posts_shortcode($atts, $content = null) {
 	
 	return '<div class="row">
 						'. $output . '
-				
+
 				<div class="d-flex justify-content-center">
-					<a class="btn-basic" href=' . get_category_link( $cat ) . '>Ver más</a>
+					<a class="btn-basic" href="' . esc_url(get_category_link( $cat )) . '">Ver más</a>
 				</div>
 			</div>';
 	

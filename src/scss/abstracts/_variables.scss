@@ -3,20 +3,21 @@
 // -----------------------------------------------------------------------------
 // https://bootstrapvars.com/4.4/
 
+// Font faces - optimized with font-display: swap
 @font-face {
   font-family: 'Roboto';
-  src: url('./../assets/fonts/Roboto-Medium.woff2') format('woff2'),
-      url('./../assets/fonts/Roboto-Medium.woff') format('woff');
-  font-weight: 500;
+  src: url('./../assets/fonts/Roboto-Regular.woff2') format('woff2'),
+      url('./../assets/fonts/Roboto-Regular.woff') format('woff');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Roboto';
-  src: url('./../assets/fonts/Roboto-Regular.woff2') format('woff2'),
-      url('./../assets/fonts/Roboto-Regular.woff') format('woff');
-  font-weight: normal;
+  src: url('./../assets/fonts/Roboto-Medium.woff2') format('woff2'),
+      url('./../assets/fonts/Roboto-Medium.woff') format('woff');
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
@@ -30,6 +31,7 @@
   font-display: swap;
 }
 
+// Color palette - SCSS variables
 $gray-100:                    #f7f7f7;
 $gray-200:                    #e4e4e4;
 $gray-300:                    #dbdbdb;
@@ -49,6 +51,21 @@ $theme-colors: (
   primary: $primary
 );
 
+// CSS Custom Properties for dynamic theming
+:root {
+  --color-primary: #{$primary};
+  --color-secondary: #{$secondary};
+  --color-accent: #{$primary};
+  --color-text: #{$text-color};
+  --color-text-header: #{$text-header-color};
+  --color-background: #{$white};
+  --color-gray-100: #{$gray-100};
+  --color-gray-200: #{$gray-200};
+  --color-gray-300: #{$gray-300};
+  --font-family-base: 'Roboto', sans-serif;
+  --font-family-heading: 'Anton', sans-serif;
+}
+
 // Font overrides
 $font-family-base: "Roboto", sans-serif !default;
 $headings-font-family: "Anton", sans-serif !default;
@@ -56,7 +73,7 @@ $headings-font-family: "Anton", sans-serif !default;
 // Font Size
 $font-size-base: 1rem;
 
-// Font Weight
+// Font Weight - reduced to only used weights (400, 500)
 $font-weight-lighter:           lighter;
 $font-weight-light:             300;
 $font-weight-normal:            400;
@@ -109,5 +126,3 @@ $grid-breakpoints: (
   xl: 1280px,
   xxl: 1440px
 );
-
-

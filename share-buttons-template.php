@@ -1,31 +1,35 @@
 <!-- Share button HTML, CSS & PHP code by www.jonakyblog.com -->
 
 <div>
-<!-- <small>Share:</small> -->
 <ul class="share-buttons">
     <li>
-        <a class="share-facebook" href="https://www.facebook.com/sharer/sharer.php?u=<?php the_permalink();?>" title="Share on Facebook" target="_blank">
-            <i class="fab fa-facebook"></i>
+        <a class="share-facebook" href="<?php echo esc_url('https://www.facebook.com/sharer/sharer.php?u=' . urlencode(esc_url(get_the_permalink()))); ?>" title="Share on Facebook" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-facebook" aria-label='icon'></i>
+            <span class="screen-reader-text">Share on Facebook</span>
         </a>
     </li>
     <li>
-        <a class="share-twitter" href="https://twitter.com/intent/tweet?url=<?php the_permalink();?>&text=<?php echo the_title(); ?>&via=<?php the_author_meta( 'twitter' ); ?>" title="Tweet this" target="_blank">
-        <i class="fab fa-x-twitter"></i>
+        <a class="share-twitter" href="<?php echo esc_url('https://twitter.com/intent/tweet?url=' . urlencode(esc_url(get_the_permalink())) . '&text=' . urlencode(esc_html(get_the_title())) . '&via=' . esc_attr(get_the_author_meta('twitter'))); ?>" title="Tweet this" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-x-twitter"></i>
+            <span class="screen-reader-text">Share on Twitter</span>
         </a>
     </li>
     <li>
-        <a class="share-linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url=<?php the_permalink(); ?>&title=<?php the_title(); ?>&source=Jonaky_Blog" title="Share on Linkedin" target="_blank">
-        <i class="fab fa-linkedin"></i>
+        <a class="share-linkedin" href="<?php echo esc_url('https://www.linkedin.com/shareArticle?mini=true&url=' . urlencode(esc_url(get_the_permalink())) . '&title=' . urlencode(esc_html(get_the_title())) . '&source=Walter_Mazzariol'); ?>" title="Share on Linkedin" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-linkedin"></i>
+            <span class="screen-reader-text">Share on LinkedIn</span>
         </a>
     </li>
     <li>
-        <a class="share-whatsapp" href="https://api.whatsapp.com/send?text=<?php the_title(); ?>: <?php the_permalink(); ?>" data-action="share/whatsapp/share" title="Share on Whatsapp" target="_blank">
-        <i class="fab fa-whatsapp"></i>
+        <a class="share-whatsapp" href="<?php echo esc_url('https://api.whatsapp.com/send?text=' . urlencode(esc_html(get_the_title()) . ': ' . esc_url(get_the_permalink()))); ?>" data-action="share/whatsapp/share" title="Share on Whatsapp" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-whatsapp"></i>
+            <span class="screen-reader-text">Share on WhatsApp</span>
         </a>
     </li>
     <li>
-        <a class="share-email" href="mailto:type%20email%20address%20here?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20<?php bloginfo('name'); ?>&body=<?php the_title(); ?> - <?php the_permalink(); ?>" title="Email to a friend/colleague" target="_blank">
-        <i class="fas fa-envelope"></i>
+        <a class="share-email" href="<?php echo esc_url('mailto:?subject=' . rawurlencode(__('I wanted to share this post with you from ', 'wp_guarapo') . get_bloginfo('name')) . '&body=' . rawurlencode(esc_html(get_the_title()) . ' - ' . esc_url(get_the_permalink()))); ?>" title="Email to a friend/colleague" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-envelope"></i>
+            <span class="screen-reader-text">Share via Email</span>
         </a>
     </li>
 </ul>
