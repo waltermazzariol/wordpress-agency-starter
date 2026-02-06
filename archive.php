@@ -14,7 +14,13 @@ get_header();
 	
 <div class="main-heading"><a href="/">Walter Mazzariol</a></div>
 	<header class="hero">
-	<img class="hero-img" src="<?php echo get_template_directory_uri() . '/dist/assets/images/hero.jpg'?>" alt="background"/>
+	<?php
+	$hero_image = '/dist/assets/images/hero.jpg';
+	if ( is_category( 'run' ) ) {
+		$hero_image = '/dist/assets/images/run.jpg';
+	}
+	?>
+	<img class="hero-img" src="<?php echo get_template_directory_uri() . $hero_image; ?>" alt="background"/>
 	<div class="hero-wrapper d-flex flex-column justify-content-end align-items-start" >
 		<h1 class="hero-title"><?php the_archive_title(); ?></h1>
 	</div>

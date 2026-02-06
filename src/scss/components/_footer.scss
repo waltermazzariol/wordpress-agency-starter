@@ -12,6 +12,7 @@
   }
 
   .footer{
+    background-color: $primary;
     font-size: 0.8rem;
     color: #7b7b7b; 
     margin-top: auto;
@@ -27,5 +28,10 @@
           color: $gray-300;
         }     
       }
-    }    
+    }
+    h2.wp-block-heading {
+      color: #fff;
+  } 
   }
+
+  

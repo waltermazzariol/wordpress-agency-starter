@@ -15,7 +15,7 @@
 get_header();
 ?>
 <main id="primary" class="container px-0 site-main">
-        <div class="main-heading typewriter"><a href="/">Walter Mazzariol</a></div>
+        <div class="main-heading"><a href="/">Walter Mazzariol</a></div>
         <header class="hero">
             <img class="hero-img" src="<?php echo esc_url(get_template_directory_uri() . '/dist/assets/images/hero.jpg'); ?>" alt="Barcelona cityscape background" width="1920" height="1080" />
             <div class="hero-wrapper-big d-flex flex-column justify-content-end align-items-start" >
