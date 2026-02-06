@@ -11,6 +11,10 @@
   &-full {
     width: 100%;
   }
+  &-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
   &-basic {
     border: none;
     color: #ffffff;
@@ -53,5 +57,29 @@
       border: 1px solid $primary;
       color: $white !important;
     }
+  }
+}
+
+// Contact Form 7 submit button
+.wpcf7-submit {
+  border-radius: 25px;
+  padding: 0.8rem 1.5rem;
+  font-size: 0.85rem;
+  border: none;
+  color: $primary;
+  background-color: $white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+
+  &:focus,
+  &:focus-visible {
+    outline: 2px solid var(--color-accent, $primary);
+    outline-offset: 2px;
+  }
+
+  &:hover {
+    text-decoration: none;
+    background-color: $gray-300;
   }
 }

@@ -461,6 +461,62 @@ function reading_time() {
 	return $totalreadingtime;
 	}
 
+/**
+ * AJAX handler for category filtering on front page
+ */
+function wp_guarapo_filter_posts_by_category() {
+	$category_id = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : 'all';
+
+	$args = array(
+		'posts_per_page' => 12,
+		'post_status' => 'publish',
+	);
+
+	if ($category_id !== 'all' && is_numeric($category_id)) {
+		$args['cat'] = intval($category_id);
+	}
+
+	$query = new WP_Query($args);
+
+	if ($query->have_posts()) :
+		while ($query->have_posts()) :
+			$query->the_post();
+			get_template_part('template-parts/content', 'loop');
+		endwhile;
+	else :
+		echo '<div class="col-12"><p>No posts found in this category.</p></div>';
+	endif;
+
+	wp_reset_postdata();
+	wp_die();
+}
+add_action('wp_ajax_filter_posts_by_category', 'wp_guarapo_filter_posts_by_category');
+add_action('wp_ajax_nopriv_filter_posts_by_category', 'wp_guarapo_filter_posts_by_category');
+
+/**
+ * Enqueue category filter script
+ */
+function wp_guarapo_enqueue_category_filter() {
+	if (is_front_page()) {
+		$js_file = get_template_directory() . '/dist/js/category-filter.js';
+		$js_ver = file_exists($js_file) ? filemtime($js_file) : '1.0.0';
+
+		wp_enqueue_script(
+			'wp-guarapo-category-filter',
+			get_template_directory_uri() . '/dist/js/category-filter.js',
+			array('jquery'),
+			$js_ver,
+			true
+		);
+
+		wp_localize_script('wp-guarapo-category-filter', 'wpGuarapoAjax', array(
+			'ajaxurl' => admin_url('admin-ajax.php'),
+			'nonce' => wp_create_nonce('filter_posts_nonce')
+		));
+	}
+}
+add_action('wp_enqueue_scripts', 'wp_guarapo_enqueue_category_filter');
+
 // recent posts shortcode
 function guarapo_recent_posts_shortcode($atts, $content = null) {
 

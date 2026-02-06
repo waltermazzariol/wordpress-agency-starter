@@ -1,0 +1,30 @@
+// -----------------------------------------------------------------------------
+// This file contains styles for the category filter component.
+// -----------------------------------------------------------------------------
+
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    .filter-btn {
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &.active {
+            background-color: $primary;
+            color: $white;
+            border-color: $primary;
+        }
+    }
+}
+
+#posts-container {
+    transition: opacity 0.3s ease;
+    min-height: 200px;
+
+    &.loading {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+}

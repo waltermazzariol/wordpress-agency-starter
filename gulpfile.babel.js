@@ -55,6 +55,9 @@ const purgecssConfig = {
       /^animate/,
       /^entry-/,
       /^widget/,
+      /^loading/,
+      /^filter-btn/,
+      /^category-filters/,
     ],
     deep: [
       /modal/,
@@ -120,7 +123,8 @@ export const watchForChanges = () => {
   watch('src/scss/**/*.scss', series(stylesDev, reload));
   watch('src/assets/**/*.{jpg,jpeg,png,svg,gif}', series(images, reload));
   watch(['src/**/*', '!src/{images,js,scss}', '!src/{images,js,scss}/**/*'], series(copy, reload));
-  watch('src/js/**/*.js', series(scripts, reload));
+  watch('src/assets/js/category-filter.js', series(categoryFilterScript, reload));
+  watch(['src/assets/js/**/*.js', '!src/assets/js/category-filter.js'], series(scriptsConcat, reload));
   watch("**/*.php", reload);
 }
 
@@ -185,11 +189,19 @@ export const scripts = () => {
 // Fallback concat-based script bundling if no main.js exists
 export const scriptsConcat = () => {
   return src([
-    'src/assets/js/*'
+    'src/assets/js/*',
+    '!src/assets/js/category-filter.js'
   ])
     .pipe(sourcemaps.init())
     .pipe(concat('bundle.js'))
     .pipe(sourcemaps.write('./'))
+    .pipe(dest('dist/js'))
+    .pipe(browserSync.stream());
+}
+
+// Copy category filter script separately
+export const categoryFilterScript = () => {
+  return src('src/assets/js/category-filter.js')
     .pipe(dest('dist/js'))
     .pipe(browserSync.stream());
 }
@@ -222,6 +234,6 @@ export const pot = () => {
     .pipe(dest(`languages/${info.name}.pot`));
 };
 
-export const dev = series(clean, parallel(stylesDev, images, copy, scriptsConcat), serve, watchForChanges);
-export const build = series(clean, parallel(stylesProd, images, copy, scriptsConcat), pot, compress);
+export const dev = series(clean, parallel(stylesDev, images, copy, scriptsConcat, categoryFilterScript), serve, watchForChanges);
+export const build = series(clean, parallel(stylesProd, images, copy, scriptsConcat, categoryFilterScript), pot, compress);
 export default dev;

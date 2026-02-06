@@ -72,14 +72,29 @@ get_header();
 
 		<div class="container mt-5">
 			<div class="row">
-			<div class="py-3 col-lg-12">
-				<h2>BLOG *</h2>
+				<div class="py-3 col-lg-12">
+					<h2>BLOG *</h2>
+				</div>
+				<div class="col-12">
+					<div class="category-filters mb-4">
+						<button class="button button-outline button-small filter-btn active" data-category="all">All</button>
+						<?php
+						$categories = get_categories(array('hide_empty' => true));
+						foreach ($categories as $category) :
+						?>
+							<button class="button button-outline button-small filter-btn" data-category="<?php echo esc_attr($category->term_id); ?>">
+								<?php echo esc_html($category->name); ?>
+							</button>
+						<?php endforeach; ?>
+					</div>
+				</div>
 			</div>
+			<div class="row" id="posts-container">
 				<?php
 				$cache_key = 'wp_guarapo_frontpage_posts';
-				$cache_active = false; 
+				$cache_active = false;
 				$cached_query = $cache_active ? get_transient($cache_key) : false;
-				
+
 				if (false === $cached_query) {
 					$args_2 = array(
 						'posts_per_page' => 12
