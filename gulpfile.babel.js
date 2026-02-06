@@ -16,7 +16,15 @@ import autoprefixer from 'autoprefixer';
 import concat from 'gulp-concat';
 import purgecss from '@fullhuman/postcss-purgecss';
 
-const sass = require('gulp-sass')(require('sass'));
+const sassCompiler = require('sass');
+const sass = require('gulp-sass')(sassCompiler);
+
+// Sass options for modern API - silence deprecations from Bootstrap and legacy code
+const sassOptions = {
+  silenceDeprecations: ['legacy-js-api', 'import', 'global-builtin', 'color-functions'],
+  quietDeps: true,
+  logger: sassCompiler.Logger.silent
+};
 const PRODUCTION = yargs.argv.prod;
 const server = browserSync.create();
 console.log('Production mode:', PRODUCTION);
@@ -84,7 +92,7 @@ export const reload = done => {
 export const stylesDev = () => {
   return src('src/scss/bundle.scss')
     .pipe(sourcemaps.init())
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass(sassOptions).on('error', sass.logError))
     .pipe(postcss([autoprefixer]))
     .pipe(sourcemaps.write())
     .pipe(dest('dist/css'))
@@ -98,7 +106,7 @@ export const stylesProd = () => {
   ];
 
   return src('src/scss/bundle.scss')
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass(sassOptions).on('error', sass.logError))
     .pipe(postcss(plugins))
     .pipe(cleanCss({
       compatibility: 'ie11',
