@@ -127,5 +127,43 @@ get_header();
 
 </main><!-- #main -->
 
+<script>
+(function($) {
+    'use strict';
+    $(document).ready(function() {
+        var $filterButtons = $('.filter-btn');
+        var $postsContainer = $('#posts-container');
+
+        $filterButtons.on('click', function(e) {
+            e.preventDefault();
+
+            var $this = $(this);
+            var category = $this.data('category');
+
+            $filterButtons.removeClass('active');
+            $this.addClass('active');
+            $postsContainer.addClass('loading');
+
+            $.ajax({
+                url: '<?php echo esc_url(admin_url('admin-ajax.php')); ?>',
+                type: 'POST',
+                data: {
+                    action: 'filter_posts_by_category',
+                    category: category
+                },
+                success: function(response) {
+                    $postsContainer.html(response);
+                    $postsContainer.removeClass('loading');
+                },
+                error: function() {
+                    $postsContainer.html('<div class="col-12"><p>Error loading posts.</p></div>');
+                    $postsContainer.removeClass('loading');
+                }
+            });
+        });
+    });
+})(jQuery);
+</script>
+
 <?php
 get_footer();

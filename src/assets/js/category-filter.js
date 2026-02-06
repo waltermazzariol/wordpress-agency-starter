@@ -2,10 +2,17 @@
     'use strict';
 
     $(document).ready(function() {
+        console.log('Category filter JS loaded');
+        console.log('wpGuarapoAjax:', typeof wpGuarapoAjax !== 'undefined' ? wpGuarapoAjax : 'NOT DEFINED');
+
         var $filterButtons = $('.filter-btn');
         var $postsContainer = $('#posts-container');
 
+        console.log('Filter buttons found:', $filterButtons.length);
+        console.log('Posts container found:', $postsContainer.length);
+
         $filterButtons.on('click', function(e) {
+            console.log('Button clicked, category:', $(this).data('category'));
             e.preventDefault();
 
             var $this = $(this);
