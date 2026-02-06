@@ -8,6 +8,7 @@ input {
   padding: 1rem;
   background: $white;
   min-width: 250px;
+  max-width: 100%;
   &[type="submit"] {
     min-width: 100px;
   }
