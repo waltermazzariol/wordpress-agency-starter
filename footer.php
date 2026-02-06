@@ -11,7 +11,7 @@
  */
 
 ?>
-<section class="footer py-4">
+<section class="custom-footer py-4">
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-8">

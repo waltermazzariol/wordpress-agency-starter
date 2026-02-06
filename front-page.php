@@ -55,16 +55,16 @@ get_header();
 		<div class="gallery container-fluid">
 			<div class="row g-0">
 				<div class="col-xs-6 col-md-3 g-0">
-					<img src="<?php echo esc_url(get_template_directory_uri() . '/dist/assets/data/images/gallery/1.jpg'); ?>" alt="Barcelona street scene with architecture" loading="lazy" />
+					<img src="<?php echo esc_url(get_template_directory_uri() . '/dist/assets/images/gallery/1.jpg'); ?>" alt="Barcelona street scene with architecture" loading="lazy" />
 				</div>
 				<div class="col-xs-6 col-md-3 g-0">
-					<img src="<?php echo esc_url(get_template_directory_uri() . '/dist/assets/data/images/gallery/2.jpg'); ?>" alt="Barcelona coastal view"  loading="lazy" />
+					<img src="<?php echo esc_url(get_template_directory_uri() . '/dist/assets/images/gallery/2.jpg'); ?>" alt="Barcelona coastal view"  loading="lazy" />
 				</div>
 				<div class="col-xs-6 col-md-3 g-0">
-					<img src="<?php echo esc_url(get_template_directory_uri() . '/dist/assets/data/images/gallery/3.jpg'); ?>" alt="Barcelona urban landscape" loading="lazy" />
+					<img src="<?php echo esc_url(get_template_directory_uri() . '/dist/assets/images/gallery/3.jpg'); ?>" alt="Barcelona urban landscape" loading="lazy" />
 				</div>
 				<div class="col-xs-6 col-md-3 g-0">
-					<img src="<?php echo esc_url(get_template_directory_uri() . '/dist/assets/data/images/gallery/4.jpg'); ?>" alt="Barcelona city life" loading="lazy" />
+					<img src="<?php echo esc_url(get_template_directory_uri() . '/dist/assets/images/gallery/4.jpg'); ?>" alt="Barcelona city life" loading="lazy" />
 				</div>
 			</div>
 		</div>

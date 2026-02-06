@@ -11,7 +11,7 @@
     
   }
 
-  .footer{
+  .custom-footer{
     background-color: $primary;
     font-size: 0.8rem;
     color: #7b7b7b; 
@@ -19,19 +19,16 @@
     .icon {
       max-height: 20px;
     }
-    .social-contact {
-      a {
-        margin-bottom: 0.5rem;
-        margin-right: 1rem;
-        color: $white;
-        &:hover{
-          color: $gray-300;
-        }     
-      }
-    }
     h2.wp-block-heading {
-      color: #fff;
-  } 
+      color: $white;
+    } 
   }
 
-  
+.social-contact-item{     
+      margin-bottom: 0.5rem;
+      margin-right: 1rem;
+      color: $white;
+         &:hover{
+          color: $gray-300;
+  }
+}
