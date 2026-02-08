@@ -45,3 +45,14 @@ hr{
 i{
   font-size: 1rem;
 }
+
+// Force link colors (prevents iOS blue override)
+a {
+  color: $primary;
+  -webkit-text-fill-color: $primary;
+
+  &:visited {
+    color: $primary;
+    -webkit-text-fill-color: $primary;
+  }
+}

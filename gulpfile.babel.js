@@ -66,6 +66,8 @@ const purgecssConfig = {
       /^loading/,
       /^filter-btn/,
       /^category-filters/,
+      // Contact Form 7
+      /^wpcf7/,
     ],
     deep: [
       /modal/,

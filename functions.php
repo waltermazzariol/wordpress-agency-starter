@@ -462,18 +462,25 @@ function reading_time() {
 	}
 
 /**
- * AJAX handler for category filtering on front page
+ * AJAX handler for category filtering on front page (excludes strava-activities)
  */
 function wp_guarapo_filter_posts_by_category() {
 	$category_id = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : 'all';
+	$strava_cat = get_category_by_slug('strava-activities');
+	$strava_cat_id = $strava_cat ? $strava_cat->term_id : 0;
+	$run_cat = get_category_by_slug('run');
+	$run_cat_id = $run_cat ? $run_cat->term_id : 0;
+	$exclude_cats = array_filter(array($strava_cat_id, $run_cat_id));
 
 	$args = array(
 		'posts_per_page' => 12,
 		'post_status' => 'publish',
+		'category__not_in' => $exclude_cats,
 	);
 
 	if ($category_id !== 'all' && is_numeric($category_id)) {
 		$args['cat'] = intval($category_id);
+		unset($args['category__not_in']);
 	}
 
 	$query = new WP_Query($args);

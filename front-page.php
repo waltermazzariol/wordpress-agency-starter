@@ -70,6 +70,7 @@ get_header();
 		</div>
 
 
+		<!-- Corporate Blog Section -->
 		<div class="container mt-5">
 			<div class="row">
 				<div class="py-3 col-lg-12">
@@ -79,7 +80,15 @@ get_header();
 					<div class="category-filters mb-4">
 						<button class="button button-outline button-small filter-btn active" data-category="all">All</button>
 						<?php
-						$categories = get_categories(array('hide_empty' => true));
+						$strava_cat = get_category_by_slug('strava-activities');
+						$strava_cat_id = $strava_cat ? $strava_cat->term_id : 0;
+						$run_cat = get_category_by_slug('run');
+						$run_cat_id = $run_cat ? $run_cat->term_id : 0;
+						$exclude_cats = array_filter(array($strava_cat_id, $run_cat_id));
+						$categories = get_categories(array(
+							'hide_empty' => true,
+							'exclude' => $exclude_cats
+						));
 						foreach ($categories as $category) :
 						?>
 							<button class="button button-outline button-small filter-btn" data-category="<?php echo esc_attr($category->term_id); ?>">
@@ -91,25 +100,15 @@ get_header();
 			</div>
 			<div class="row" id="posts-container">
 				<?php
-				$cache_key = 'wp_guarapo_frontpage_posts';
-				$cache_active = false;
-				$cached_query = $cache_active ? get_transient($cache_key) : false;
+				$blog_args = array(
+					'posts_per_page' => 12,
+					'category__not_in' => $exclude_cats
+				);
+				$blog_posts = new WP_Query($blog_args);
 
-				if (false === $cached_query) {
-					$args_2 = array(
-						'posts_per_page' => 12
-					);
-					$arr_posts = new WP_Query($args_2);
-					if ($cache_active) {
-						set_transient($cache_key, $arr_posts, HOUR_IN_SECONDS);
-					}
-				} else {
-					$arr_posts = $cached_query;
-				}
-
-				if ($arr_posts->have_posts()) :
-					while ($arr_posts->have_posts()) :
-						$arr_posts->the_post();
+				if ($blog_posts->have_posts()) :
+					while ($blog_posts->have_posts()) :
+						$blog_posts->the_post();
 						get_template_part('template-parts/content', 'loop');
 					endwhile;
 				endif;
@@ -123,7 +122,36 @@ get_header();
 			</div>
 		</div>
 
-		
+		<!-- Run Blog Section (Strava Activities) -->
+		<div class="container mt-5">
+			<div class="row">
+				<div class="py-3 col-lg-12">
+					<h2>RUN BLOG *</h2>
+				</div>
+			</div>
+			<div class="row">
+				<?php
+				$strava_args = array(
+					'posts_per_page' => 12,
+					'category_name' => 'strava-activities'
+				);
+				$strava_posts = new WP_Query($strava_args);
+
+				if ($strava_posts->have_posts()) :
+					while ($strava_posts->have_posts()) :
+						$strava_posts->the_post();
+						get_template_part('template-parts/content', 'loop');
+					endwhile;
+				endif;
+				wp_reset_postdata();
+				?>
+			</div>
+			<div class="row justify-content-center my-5">
+				<span class="col-4 text-center">
+					<a class="button button-outline" href="<?php echo esc_url(get_category_link(get_cat_ID('strava-activities'))); ?>" rel="noopener noreferrer">Read more →</a>
+				</span>
+			</div>
+		</div>
 
 </main><!-- #main -->
 
