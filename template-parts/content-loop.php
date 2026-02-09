@@ -14,11 +14,11 @@
 	<div class="card-loop">
 
 		<?php $feature_img = get_the_post_thumbnail_url() ? esc_url(get_the_post_thumbnail_url()) : catch_that_image(); ?>
-		<div class="<?php if (in_category('strava-activities')) { echo 'box-loop-square'; } else { echo 'box-loop'; } ?>" src="<?php echo esc_url($feature_img); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+		<?php $box_class = (get_query_var('box_style') === 'square') ? 'box-loop-square' : 'box-loop'; ?>
+		<div class="<?php echo esc_attr($box_class); ?>" src="<?php echo esc_url($feature_img); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
 			<a href="<?php echo esc_url(get_permalink()); ?>">
 				<img class="box-loop-image" src="<?php echo esc_url($feature_img); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" width="400" height="300" loading="lazy" />
 			</a>
-
 			<?php
 			if (strtotime($post->post_date) > strtotime('-1 weeks')) {
 				echo '<span class="entry-featured">New</span>';

@@ -158,6 +158,7 @@ get_header();
 				if ($strava_posts->have_posts()) :
 					while ($strava_posts->have_posts()) :
 						$strava_posts->the_post();
+						set_query_var('box_style', 'square');
 						get_template_part('template-parts/content', 'loop');
 					endwhile;
 				endif;
