@@ -79,7 +79,12 @@ get_header();
 		<!-- Gallery Lightbox -->
 		<div id="gallery-lightbox" class="lightbox">
 			<button class="lightbox-close" aria-label="Close lightbox">&times;</button>
-			<img class="lightbox-img" src="" alt="Gallery image full size" />
+			<figure class="lightbox-content">
+				<img class="lightbox-img" src="" alt="Gallery image full size" />
+				<figcaption class="lightbox-caption">
+					<a href="https://instagram.com/waltermazzariol" target="_blank" rel="noopener noreferrer">@waltermazzariol</a>
+				</figcaption>
+			</figure>
 		</div>
 
 

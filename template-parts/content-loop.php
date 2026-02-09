@@ -9,11 +9,12 @@
 
 ?>
 
+
 <article class="col-md-4 mb-5" id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<div class="card-loop">
 
 		<?php $feature_img = get_the_post_thumbnail_url() ? esc_url(get_the_post_thumbnail_url()) : catch_that_image(); ?>
-		<div class="box-loop">
+		<div class="<?php if (in_category('strava-activities')) { echo 'box-loop-square'; } else { echo 'box-loop'; } ?>" src="<?php echo esc_url($feature_img); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
 			<a href="<?php echo esc_url(get_permalink()); ?>">
 				<img class="box-loop-image" src="<?php echo esc_url($feature_img); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" width="400" height="300" loading="lazy" />
 			</a>

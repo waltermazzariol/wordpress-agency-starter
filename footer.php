@@ -26,7 +26,7 @@
 				</span>
 			</div>
 			<div class="col-sm-12 col-md-4">
-				<img src="<?php echo esc_url(get_template_directory_uri()); ?>/dist/assets/images/map.png" alt="mapa" />
+				<img class="footer-map" src="<?php echo esc_url(get_template_directory_uri()); ?>/dist/assets/images/map.png" alt="mapa" />
 			</div>
 			<div class="col-sm-12 col-md-4">
 				<h2>SUBSCRIBE</h2>

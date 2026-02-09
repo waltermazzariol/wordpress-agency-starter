@@ -19,6 +19,7 @@
     border: none;
     color: #ffffff;
     background-color: $primary;
+    -webkit-text-fill-color: $white!important;
     a {
       color: inherit;
     }
@@ -41,6 +42,10 @@
     border: 1px solid $primary;
     a {
       color: inherit;
+      &:hover {
+        color: $white!important;
+        -webkit-text-fill-color: $white!important;
+      }
     }
     i {
       color: inherit;
@@ -56,6 +61,8 @@
       background-color: $primary !important;
       border: 1px solid $primary;
       color: $white !important;
+      -webkit-text-fill-color: $white!important;
+      
     }
   }
 }
