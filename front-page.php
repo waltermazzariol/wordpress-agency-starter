@@ -54,19 +54,32 @@ get_header();
 
 		<div class="gallery container-fluid">
 			<div class="row g-0">
-				<div class="col-xs-6 col-md-3 g-0">
-					<img src="<?php echo esc_url(get_template_directory_uri() . '/dist/assets/images/gallery/1.jpg'); ?>" alt="Barcelona street scene with architecture" loading="lazy" />
-				</div>
-				<div class="col-xs-6 col-md-3 g-0">
-					<img src="<?php echo esc_url(get_template_directory_uri() . '/dist/assets/images/gallery/2.jpg'); ?>" alt="Barcelona coastal view"  loading="lazy" />
-				</div>
-				<div class="col-xs-6 col-md-3 g-0">
-					<img src="<?php echo esc_url(get_template_directory_uri() . '/dist/assets/images/gallery/3.jpg'); ?>" alt="Barcelona urban landscape" loading="lazy" />
-				</div>
-				<div class="col-xs-6 col-md-3 g-0">
-					<img src="<?php echo esc_url(get_template_directory_uri() . '/dist/assets/images/gallery/4.jpg'); ?>" alt="Barcelona city life" loading="lazy" />
-				</div>
+				<?php
+				$gallery_path = get_template_directory() . '/dist/assets/images/gallery/';
+				$gallery_url = get_template_directory_uri() . '/dist/assets/images/gallery/';
+				$images = glob($gallery_path . '*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+
+				if ($images) {
+					shuffle($images);
+					$random_images = array_slice($images, 0, 4);
+
+					foreach ($random_images as $image) :
+						$filename = basename($image);
+				?>
+					<div class="col-6 col-md-3 g-0">
+						<img src="<?php echo esc_url($gallery_url . $filename); ?>" alt="Barcelona gallery image" loading="lazy" class="gallery-img" />
+					</div>
+				<?php
+					endforeach;
+				}
+				?>
 			</div>
+		</div>
+
+		<!-- Gallery Lightbox -->
+		<div id="gallery-lightbox" class="lightbox">
+			<button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+			<img class="lightbox-img" src="" alt="Gallery image full size" />
 		</div>
 
 
@@ -132,7 +145,7 @@ get_header();
 			<div class="row">
 				<?php
 				$strava_args = array(
-					'posts_per_page' => 12,
+					'posts_per_page' => 3,
 					'category_name' => 'strava-activities'
 				);
 				$strava_posts = new WP_Query($strava_args);
@@ -188,6 +201,31 @@ get_header();
                     $postsContainer.removeClass('loading');
                 }
             });
+        });
+
+        // Gallery Lightbox
+        var $lightbox = $('#gallery-lightbox');
+        var $lightboxImg = $lightbox.find('.lightbox-img');
+
+        $('.gallery-img').on('click', function() {
+            var imgSrc = $(this).attr('src');
+            $lightboxImg.attr('src', imgSrc);
+            $lightbox.addClass('active');
+            $('body').css('overflow', 'hidden');
+        });
+
+        $lightbox.on('click', function(e) {
+            if (e.target === this || $(e.target).hasClass('lightbox-close')) {
+                $lightbox.removeClass('active');
+                $('body').css('overflow', '');
+            }
+        });
+
+        $(document).on('keydown', function(e) {
+            if (e.key === 'Escape' && $lightbox.hasClass('active')) {
+                $lightbox.removeClass('active');
+                $('body').css('overflow', '');
+            }
         });
     });
 })(jQuery);
