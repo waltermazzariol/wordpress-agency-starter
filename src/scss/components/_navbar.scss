@@ -68,29 +68,41 @@ $navbar-toggle-collapse-line: $gray-300;
     }
   }
   @include media-breakpoint-down(md) {
-    &-collapse {
-      position: absolute;
-      top: 54px;
-      right: 100%;
-      padding-left: 15px;
-      padding-right: 15px;
-      padding-bottom: 15px;
+    .navbar-collapse {
+      position: fixed;
+      top: 80px;
+      left: 0;
       width: 100%;
-      height: 100vh;
-      transition: all 0.3s ease;
-      display: block;
+      height: calc(100vh - 54px);
+      padding: 15px;
       background-color: $navbar-toggle-collapse;
-      &.collapsing {
-        margin-right: 50%;
-        height: 100vh;
-        transition: all 0.3s ease;
-        display: block;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out, visibility 0.3s;
+      visibility: hidden;
+      z-index: 1000;
+      color: #333;
+      text-align: left;
+      border-right: 10px solid #dbdbdb;
+      padding: 10px;
+      border-left: 10px solid #dbdbdb;
+
+      // Override Bootstrap's collapse display behavior
+      &.collapse {
+        display: block !important;
       }
-      &.show {
-        right: 0;
+
+      &.collapsing {
+        display: block !important;
+        transform: translateX(-50%);
+        visibility: visible;
+      }
+
+      &.collapse.show {
+        transform: translateX(0);
+        visibility: visible;
       }
     }
-    &-nav {
+    .navbar-nav {
       .nav-item {
         border-bottom: 1px solid $navbar-toggle-collapse-line;
         padding: 0.5rem 0 !important;

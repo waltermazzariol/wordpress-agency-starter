@@ -47,7 +47,7 @@ get_header();
 		<div id="gallery" class="container">
 			<div class="row">
 				<div class="py-3 col-lg-12">
-					<h2>Barcelona vibes *</h2>
+					<h2>Photo Journal *</h2>
 				</div>
 			</div>
 		</div>

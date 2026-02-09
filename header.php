@@ -22,25 +22,54 @@
 	<!-- Font preconnect for performance -->
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+	<?php
+	// Determine the best image for social sharing (OG & Twitter).
+	$og_image = '';
+
+	// If viewing a category archive, try to use the category image first.
+	if (is_category()) {
+		$term = get_queried_object();
+		if ($term && isset($term->term_id)) {
+			// Common pattern: image stored as attachment ID in "thumbnail_id".
+			$cat_image_id = get_term_meta($term->term_id, 'thumbnail_id', true);
+			if ($cat_image_id) {
+				$og_image = wp_get_attachment_image_url($cat_image_id, 'large');
+			}
+
+			// Fallback: image URL stored directly in a custom term meta field "image".
+			if (!$og_image) {
+				$cat_image_url = get_term_meta($term->term_id, 'image', true);
+				if ($cat_image_url) {
+					$og_image = $cat_image_url;
+				}
+			}
+		}
+	}
+
+	// For non-category (or if no category image), fall back to post thumbnail.
+	if (!$og_image && has_post_thumbnail()) {
+		$og_image = get_the_post_thumbnail_url(null, 'large');
+	}
+
+	// Final fallback: default hero image.
+	if (!$og_image) {
+		$og_image = get_template_directory_uri() . '/dist/assets/images/hero.jpg';
+	}
+	?>
+
 	<!-- Open Graph Meta Tags -->
 	<meta property="og:title" content="<?php echo esc_attr(wp_get_document_title()); ?>">
 	<meta property="og:description" content="<?php echo esc_attr(get_bloginfo('description')); ?>">
 	<meta property="og:type" content="<?php echo is_single() ? 'article' : 'website'; ?>">
 	<meta property="og:url" content="<?php echo esc_url(get_permalink()); ?>">
-	<?php if (has_post_thumbnail()) : ?>
-	<meta property="og:image" content="<?php echo esc_url(get_the_post_thumbnail_url(null, 'large')); ?>">
-	<?php else : ?>
-	<meta property="og:image" content="<?php echo esc_url(get_template_directory_uri() . '/dist/assets/images/hero.jpg'); ?>">
-	<?php endif; ?>
+	<meta property="og:image" content="<?php echo esc_url($og_image); ?>">
 	<meta property="og:site_name" content="<?php echo esc_attr(get_bloginfo('name')); ?>">
 
 	<!-- Twitter Card Meta Tags -->
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="<?php echo esc_attr(wp_get_document_title()); ?>">
 	<meta name="twitter:description" content="<?php echo esc_attr(get_bloginfo('description')); ?>">
-	<?php if (has_post_thumbnail()) : ?>
-	<meta name="twitter:image" content="<?php echo esc_url(get_the_post_thumbnail_url(null, 'large')); ?>">
-	<?php endif; ?>
+	<meta name="twitter:image" content="<?php echo esc_url($og_image); ?>">
 
 	<?php wp_head(); ?>
 </head>
