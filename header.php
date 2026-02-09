@@ -55,20 +55,44 @@
 	if (!$og_image) {
 		$og_image = get_template_directory_uri() . '/dist/assets/images/hero.jpg';
 	}
+
+	// Determine description for OG/Twitter tags
+	$og_description = '';
+	if (is_singular() && has_excerpt()) {
+		$og_description = get_the_excerpt();
+	} elseif (is_singular()) {
+		$og_description = wp_trim_words(strip_shortcodes(get_the_content()), 30, '...');
+	} elseif (is_category()) {
+		$og_description = category_description();
+	}
+	if (!$og_description) {
+		$og_description = get_bloginfo('description');
+	}
+
+	// Determine URL for OG tags
+	if (is_singular()) {
+		$og_url = get_permalink();
+	} elseif (is_category()) {
+		$og_url = get_category_link(get_queried_object_id());
+	} elseif (is_home() || is_front_page()) {
+		$og_url = home_url('/');
+	} else {
+		$og_url = home_url(add_query_arg(array(), $wp->request));
+	}
 	?>
 
 	<!-- Open Graph Meta Tags -->
 	<meta property="og:title" content="<?php echo esc_attr(wp_get_document_title()); ?>">
-	<meta property="og:description" content="<?php echo esc_attr(get_bloginfo('description')); ?>">
+	<meta property="og:description" content="<?php echo esc_attr($og_description); ?>">
 	<meta property="og:type" content="<?php echo is_single() ? 'article' : 'website'; ?>">
-	<meta property="og:url" content="<?php echo esc_url(get_permalink()); ?>">
+	<meta property="og:url" content="<?php echo esc_url($og_url); ?>">
 	<meta property="og:image" content="<?php echo esc_url($og_image); ?>">
 	<meta property="og:site_name" content="<?php echo esc_attr(get_bloginfo('name')); ?>">
 
 	<!-- Twitter Card Meta Tags -->
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="<?php echo esc_attr(wp_get_document_title()); ?>">
-	<meta name="twitter:description" content="<?php echo esc_attr(get_bloginfo('description')); ?>">
+	<meta name="twitter:description" content="<?php echo esc_attr($og_description); ?>">
 	<meta name="twitter:image" content="<?php echo esc_url($og_image); ?>">
 
 	<?php wp_head(); ?>

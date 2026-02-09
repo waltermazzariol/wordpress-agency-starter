@@ -611,3 +611,78 @@ function create_relatedposts_shortcode() {
 	wp_reset_postdata();
 
 }
+
+/**
+ * Category Image Meta for SEO
+ */
+
+// Enqueue media scripts on category edit pages
+function wp_guarapo_category_admin_scripts($hook) {
+    if ($hook === 'term.php' || $hook === 'edit-tags.php') {
+        wp_enqueue_media();
+    }
+}
+add_action('admin_enqueue_scripts', 'wp_guarapo_category_admin_scripts');
+
+// Add image field to category edit form
+function wp_guarapo_category_image_field($term) {
+    $image_id = get_term_meta($term->term_id, 'thumbnail_id', true);
+    $image_url = $image_id ? wp_get_attachment_image_url($image_id, 'medium') : '';
+    ?>
+    <tr class="form-field">
+        <th scope="row"><label for="category-image"><?php esc_html_e('Category Image', 'wp_guarapo'); ?></label></th>
+        <td>
+            <input type="hidden" id="category_image_id" name="category_image_id" value="<?php echo esc_attr($image_id); ?>">
+            <div id="category-image-preview" style="margin-bottom: 10px;">
+                <?php if ($image_url) : ?>
+                    <img src="<?php echo esc_url($image_url); ?>" style="max-width: 300px; height: auto;">
+                <?php endif; ?>
+            </div>
+            <button type="button" class="button" id="category-image-upload"><?php esc_html_e('Select Image', 'wp_guarapo'); ?></button>
+            <button type="button" class="button" id="category-image-remove" <?php echo $image_id ? '' : 'style="display:none;"'; ?>><?php esc_html_e('Remove Image', 'wp_guarapo'); ?></button>
+            <p class="description"><?php esc_html_e('This image will be used for social sharing (Open Graph/Twitter) on category pages.', 'wp_guarapo'); ?></p>
+        </td>
+    </tr>
+    <script>
+    jQuery(document).ready(function($) {
+        var mediaFrame;
+        $('#category-image-upload').on('click', function(e) {
+            e.preventDefault();
+            if (mediaFrame) { mediaFrame.open(); return; }
+            mediaFrame = wp.media({
+                title: '<?php echo esc_js(__('Select Category Image', 'wp_guarapo')); ?>',
+                button: { text: '<?php echo esc_js(__('Use this image', 'wp_guarapo')); ?>' },
+                multiple: false
+            });
+            mediaFrame.on('select', function() {
+                var attachment = mediaFrame.state().get('selection').first().toJSON();
+                $('#category_image_id').val(attachment.id);
+                $('#category-image-preview').html('<img src="' + attachment.url + '" style="max-width: 300px; height: auto;">');
+                $('#category-image-remove').show();
+            });
+            mediaFrame.open();
+        });
+        $('#category-image-remove').on('click', function(e) {
+            e.preventDefault();
+            $('#category_image_id').val('');
+            $('#category-image-preview').html('');
+            $(this).hide();
+        });
+    });
+    </script>
+    <?php
+}
+add_action('category_edit_form_fields', 'wp_guarapo_category_image_field');
+
+// Save category image meta
+function wp_guarapo_save_category_image($term_id) {
+    if (isset($_POST['category_image_id'])) {
+        $image_id = absint($_POST['category_image_id']);
+        if ($image_id) {
+            update_term_meta($term_id, 'thumbnail_id', $image_id);
+        } else {
+            delete_term_meta($term_id, 'thumbnail_id');
+        }
+    }
+}
+add_action('edited_category', 'wp_guarapo_save_category_image');

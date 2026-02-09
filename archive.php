@@ -11,13 +11,13 @@ get_header();
 ?>
 
 <main id="primary" class="container site-main">
-	
 <div class="main-heading"><a href="/">Walter Mazzariol</a></div>
 	<header class="hero">
 	<?php
 	$hero_image = '/dist/assets/images/hero.jpg';
 	if ( is_category( 'run' ) ) {
 		$hero_image = '/dist/assets/images/run.jpg';
+		set_query_var( 'box_style', 'square' );
 	}
 	?>
 	<img class="hero-img" src="<?php echo get_template_directory_uri() . $hero_image; ?>" alt="background"/>
