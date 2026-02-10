@@ -390,17 +390,14 @@ function tthq_add_custom_fa_css()
     return $css;
   }
 
-/* 
-* Add Leer más button
-*/
-
-  function theme_enqueue_styles() {
-	wp_enqueue_style( 'theme-styles', get_stylesheet_uri() ); // This is where you enqueue your theme's main stylesheet
+/**
+ * Add customizer inline styles to main stylesheet
+ */
+function theme_enqueue_customizer_styles() {
 	$custom_css = theme_get_customizer_css();
-	wp_add_inline_style( 'theme-styles', $custom_css );
-  }
-  
-  add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
+	wp_add_inline_style( 'wp_guarapo-style', $custom_css );
+}
+add_action( 'wp_enqueue_scripts', 'theme_enqueue_customizer_styles' );
 
   function custom_excerpt_length( $length ) {
 	return 15;
@@ -420,13 +417,9 @@ function wpdocs_excerpt_more( $more ) {
 add_filter( 'excerpt_more', 'wpdocs_excerpt_more' );
 
 /**
- * Fantastic social media share buttons by www.jonakyblog.com
+ * Social media share buttons
  */
 function my_share_buttons() {
-    $url = urlencode(get_the_permalink()); /* Getting the current post link */
-    $title = urlencode(html_entity_decode(get_the_title(), ENT_COMPAT, 'UTF-8')); /* Get the post title */
-    $media = urlencode(get_the_post_thumbnail_url(get_the_ID(), 'full')); /* Get the current post image thumbnail */
-
     include( locate_template('share-buttons-template.php', false, false) );
 }
 
@@ -445,22 +438,17 @@ function catch_that_image() {
 	return $first_img;
   }
 
-  //estimated reading time
+/**
+ * Estimated reading time
+ */
 function reading_time() {
 	global $post;
 	$content = get_post_field( 'post_content', $post->ID );
 	$word_count = str_word_count( strip_tags( $content ) );
 	$readingtime = ceil($word_count / 200);
-	
-	if ($readingtime == 1) {
-	$timer = " min";
-	} else {
-	$timer = " min";
-	}
-	$totalreadingtime = $readingtime . $timer;
-	
-	return $totalreadingtime;
-	}
+
+	return $readingtime . ' min';
+}
 
 /**
  * AJAX handler for category filtering on front page (excludes strava-activities)
@@ -583,12 +571,10 @@ add_shortcode('recent_posts', 'guarapo_recent_posts_shortcode');
 // Responsive for youtube video
 add_theme_support( 'responsive-embeds' );
 
-// Create Shortcode related_posts_
-// Shortcode: [related_posts_ number="5"]
+/**
+ * Display related posts section
+ */
 function create_relatedposts_shortcode() {
-
-	
-
 	// Custom WP query relatedposts
 	$args_relatedposts = array(
 		'posts_per_page' => '3',
