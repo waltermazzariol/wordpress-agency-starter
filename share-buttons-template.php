@@ -32,5 +32,11 @@
             <span class="screen-reader-text">Share via Email</span>
         </a>
     </li>
+    <li>
+        <a class="share-threads" href="<?php echo esc_url('https://www.threads.net/intent/post?text=' . urlencode(esc_html(get_the_title()) . ' ' . esc_url(get_the_permalink()))); ?>" title="Share on Threads" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-threads"></i>
+            <span class="screen-reader-text">Share on Threads</span>
+        </a>
+    </li>
 </ul>
 </div>
