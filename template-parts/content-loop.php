@@ -42,6 +42,9 @@
 				echo '<span class="reading-time">' . esc_html(reading_time()) . '</span>';
 			?>
 		</div><!-- .entry-meta -->
+		<div class="entry-summary small">
+			<?php the_excerpt(); ?>
+		</div>
 		</header><!-- .entry-header -->
 
 	</div><!-- .entry-content -->
