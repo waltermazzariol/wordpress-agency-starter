@@ -489,6 +489,44 @@ function wp_guarapo_filter_posts_by_category() {
 add_action('wp_ajax_filter_posts_by_category', 'wp_guarapo_filter_posts_by_category');
 add_action('wp_ajax_nopriv_filter_posts_by_category', 'wp_guarapo_filter_posts_by_category');
 
+/**
+ * AJAX handler for category filtering on blog page (classic layout)
+ */
+function wp_guarapo_filter_blog_posts() {
+	$category_id = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : 'all';
+	$strava_cat = get_category_by_slug('strava-activities');
+	$strava_cat_id = $strava_cat ? $strava_cat->term_id : 0;
+
+	$args = array(
+		'posts_per_page' => -1,
+		'post_status' => 'publish',
+	);
+
+	if ($category_id !== 'all' && is_numeric($category_id)) {
+		$args['cat'] = intval($category_id);
+	} else {
+		if ($strava_cat_id) {
+			$args['category__not_in'] = array($strava_cat_id);
+		}
+	}
+
+	$query = new WP_Query($args);
+
+	if ($query->have_posts()) :
+		while ($query->have_posts()) :
+			$query->the_post();
+			get_template_part('template-parts/content', 'blog');
+		endwhile;
+	else :
+		echo '<p>No posts found in this category.</p>';
+	endif;
+
+	wp_reset_postdata();
+	wp_die();
+}
+add_action('wp_ajax_filter_blog_posts', 'wp_guarapo_filter_blog_posts');
+add_action('wp_ajax_nopriv_filter_blog_posts', 'wp_guarapo_filter_blog_posts');
+
 // recent posts shortcode
 function guarapo_recent_posts_shortcode($atts, $content = null) {
 

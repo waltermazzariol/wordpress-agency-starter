@@ -47,8 +47,12 @@
 
 				<div class="blog-classic-entry__excerpt">
 					<?php
-					$plain_text = wp_strip_all_tags( get_the_content() );
-					echo mb_strimwidth( $plain_text, 0, 1200, '...' );
+					$content = apply_filters( 'the_content', get_the_content() );
+					$content = str_replace( array( '</p>', '<br />', '<br>' ), "\n\n", $content );
+					$content = wp_strip_all_tags( $content );
+					$content = trim( $content );
+					$content = mb_strimwidth( $content, 0, 600, '...' );
+					echo wpautop( $content );
 					?>
 					<a href="<?php echo esc_url( get_permalink() ); ?>" class="blog-classic-entry__read-more">Read more</a>
 				</div>

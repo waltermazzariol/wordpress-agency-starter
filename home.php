@@ -25,8 +25,28 @@ get_header();
 		</header>
 
 		<div class="container mt-5">
+			<div class="row">
+				<div class="col-12">
+					<div class="category-filters mb-4">
+						<button class="button button-outline button-small filter-btn active" data-category="all">All</button>
+						<?php
+						$strava_cat = get_category_by_slug('strava-activities');
+						$strava_cat_id = $strava_cat ? $strava_cat->term_id : 0;
+						$categories = get_categories(array(
+							'hide_empty' => true,
+							'exclude' => $strava_cat_id ? array($strava_cat_id) : array(),
+						));
+						foreach ($categories as $category) :
+						?>
+							<button class="button button-outline button-small filter-btn" data-category="<?php echo esc_attr($category->term_id); ?>">
+								<?php echo esc_html($category->name); ?>
+							</button>
+						<?php endforeach; ?>
+					</div>
+				</div>
+			</div>
 			<div class="row justify-content-start">
-				<div class="col-lg-12 col-12">
+				<div class="col-lg-12 col-12" id="blog-posts-container">
 					<?php
 					while ( have_posts() ) :
 						the_post();
@@ -37,17 +57,50 @@ get_header();
 			</div>
 		</div>
 
-		<?php
-		the_posts_pagination( array(
-			'prev_text' => '<span>Anterior</span>',
-			'next_text' => '<span>Siguiente</span>',
-		) );
-
+	<?php
 	else :
 		get_template_part( 'template-parts/content', 'none' );
 	endif;
 	?>
 </main><!-- #main -->
+
+<script>
+(function($) {
+    'use strict';
+    $(document).ready(function() {
+        var $filterButtons = $('.filter-btn');
+        var $postsContainer = $('#blog-posts-container');
+
+        $filterButtons.on('click', function(e) {
+            e.preventDefault();
+
+            var $this = $(this);
+            var category = $this.data('category');
+
+            $filterButtons.removeClass('active');
+            $this.addClass('active');
+            $postsContainer.addClass('loading');
+
+            $.ajax({
+                url: '<?php echo esc_url(admin_url('admin-ajax.php')); ?>',
+                type: 'POST',
+                data: {
+                    action: 'filter_blog_posts',
+                    category: category
+                },
+                success: function(response) {
+                    $postsContainer.html(response);
+                    $postsContainer.removeClass('loading');
+                },
+                error: function() {
+                    $postsContainer.html('<p>Error loading posts.</p>');
+                    $postsContainer.removeClass('loading');
+                }
+            });
+        });
+    });
+})(jQuery);
+</script>
 
 <?php
 get_footer();
