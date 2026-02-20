@@ -129,12 +129,19 @@ export const stylesProd = () => {
     .pipe(browserSync.stream());
 }
 
+// Page-specific scripts that should NOT be concatenated into bundle.js
+const standaloneScripts = [
+  'src/assets/js/category-filter.js',
+  'src/assets/js/front-page.js',
+  'src/assets/js/blog-filter.js'
+];
+
 export const watchForChanges = () => {
   watch('src/scss/**/*.scss', series(stylesDev, reload));
   watch('src/assets/**/*.{jpg,jpeg,png,svg,gif}', series(images, reload));
   watch(['src/**/*', '!src/{images,js,scss}', '!src/{images,js,scss}/**/*'], series(copy, reload));
-  watch('src/assets/js/category-filter.js', series(categoryFilterScript, reload));
-  watch(['src/assets/js/**/*.js', '!src/assets/js/category-filter.js'], series(scriptsConcat, reload));
+  watch(standaloneScripts, series(pageScripts, reload));
+  watch(['src/assets/js/**/*.js', ...standaloneScripts.map(s => '!' + s)], series(scriptsConcat, reload));
   watch("**/*.php", reload);
 }
 
@@ -200,7 +207,7 @@ export const scripts = () => {
 export const scriptsConcat = () => {
   return src([
     'src/assets/js/*',
-    '!src/assets/js/category-filter.js'
+    ...standaloneScripts.map(s => '!' + s)
   ])
     .pipe(sourcemaps.init())
     .pipe(concat('bundle.js'))
@@ -209,9 +216,9 @@ export const scriptsConcat = () => {
     .pipe(browserSync.stream());
 }
 
-// Copy category filter script separately
-export const categoryFilterScript = () => {
-  return src('src/assets/js/category-filter.js')
+// Copy page-specific scripts separately (not bundled)
+export const pageScripts = () => {
+  return src(standaloneScripts, { allowEmpty: true })
     .pipe(dest('dist/js'))
     .pipe(browserSync.stream());
 }
@@ -244,6 +251,6 @@ export const pot = () => {
     .pipe(dest(`languages/${info.name}.pot`));
 };
 
-export const dev = series(clean, parallel(stylesDev, images, copy, scriptsConcat, categoryFilterScript), serve, watchForChanges);
-export const build = series(clean, parallel(stylesProd, images, copy, scriptsConcat, categoryFilterScript), pot, compress);
+export const dev = series(clean, parallel(stylesDev, images, copy, scriptsConcat, pageScripts), serve, watchForChanges);
+export const build = series(clean, parallel(stylesProd, images, copy, scriptsConcat, pageScripts), pot, compress);
 export default dev;

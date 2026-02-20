@@ -170,14 +170,11 @@ add_action('widgets_init', 'wp_guarapo_widgets_init');
  */
 function wp_guarapo_scripts()
 {
-	wp_enqueue_style('wp_guarapo-style', get_stylesheet_uri(), array(), _S_VERSION);
-	wp_style_add_data('wp_guarapo-style', 'rtl', 'replace');
-
-	// Load jQuery in the header (false = not in footer) for inline scripts
+	// Move jQuery to footer (inline scripts are now external files)
 	wp_enqueue_script('jquery');
-	wp_scripts()->add_data('jquery', 'group', 0);
-	wp_scripts()->add_data('jquery-core', 'group', 0);
-	wp_scripts()->add_data('jquery-migrate', 'group', 0);
+	wp_scripts()->add_data('jquery', 'group', 1);
+	wp_scripts()->add_data('jquery-core', 'group', 1);
+	wp_scripts()->add_data('jquery-migrate', 'group', 1);
 
 	wp_enqueue_script('wp_guarapo-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
 
@@ -187,6 +184,36 @@ function wp_guarapo_scripts()
 }
 add_action('wp_enqueue_scripts', 'wp_guarapo_scripts');
 
+/**
+ * Add defer attribute to jQuery and all scripts that depend on it.
+ * Defer preserves execution order, so jQuery will run before its dependents.
+ */
+function wp_guarapo_defer_scripts( $tag, $handle ) {
+	$defer_handles = array(
+		'jquery-core',
+		'jquery-migrate',
+		'wp-guarapo-front-page',
+		'wp-guarapo-blog-filter',
+	);
+	if ( in_array( $handle, $defer_handles, true ) && strpos( $tag, ' defer' ) === false ) {
+		return str_replace( ' src=', ' defer src=', $tag );
+	}
+	return $tag;
+}
+add_filter( 'script_loader_tag', 'wp_guarapo_defer_scripts', 10, 2 );
+
+/**
+ * Convert non-critical CSS to async loading via preload + onload pattern.
+ */
+function wp_guarapo_async_styles( $html, $handle ) {
+	$async_handles = array( 'animate', 'custom-fa', 'wp-block-library', 'contact-form-7' );
+	if ( in_array( $handle, $async_handles, true ) && ! is_admin() ) {
+		$html = str_replace( "rel='stylesheet'", "rel='preload' as='style' onload=\"this.onload=null;this.rel='stylesheet'\"", $html );
+		$html .= '<noscript>' . str_replace( array( "rel='preload'", " as='style'", " onload=\"this.onload=null;this.rel='stylesheet'\"" ), array( "rel='stylesheet'", '', '' ), $html ) . '</noscript>';
+	}
+	return $html;
+}
+add_filter( 'style_loader_tag', 'wp_guarapo_async_styles', 10, 2 );
 
 /**
  * Enqueue scripts and styles from dist.
@@ -244,6 +271,30 @@ require get_template_directory() . '/inc/customizer.php';
 if (defined('JETPACK__VERSION')) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+/**
+ * Enqueue page-specific scripts with localized AJAX URL.
+ */
+function wp_guarapo_page_scripts() {
+	if ( is_front_page() ) {
+		$file = get_template_directory() . '/dist/js/front-page.js';
+		$ver = file_exists( $file ) ? filemtime( $file ) : _S_VERSION;
+		wp_enqueue_script( 'wp-guarapo-front-page', get_template_directory_uri() . '/dist/js/front-page.js', array( 'jquery' ), $ver, true );
+		wp_localize_script( 'wp-guarapo-front-page', 'wpGuarapoAjax', array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		) );
+	}
+
+	if ( is_home() ) {
+		$file = get_template_directory() . '/dist/js/blog-filter.js';
+		$ver = file_exists( $file ) ? filemtime( $file ) : _S_VERSION;
+		wp_enqueue_script( 'wp-guarapo-blog-filter', get_template_directory_uri() . '/dist/js/blog-filter.js', array( 'jquery' ), $ver, true );
+		wp_localize_script( 'wp-guarapo-blog-filter', 'wpGuarapoAjax', array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		) );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'wp_guarapo_page_scripts' );
 
 // Incluir Bootstrap JS (bundle includes Popper)
 function bootstrap_js() {
@@ -395,7 +446,7 @@ function tthq_add_custom_fa_css()
  */
 function theme_enqueue_customizer_styles() {
 	$custom_css = theme_get_customizer_css();
-	wp_add_inline_style( 'wp_guarapo-style', $custom_css );
+	wp_add_inline_style( '_themename-stylesheet', $custom_css );
 }
 add_action( 'wp_enqueue_scripts', 'theme_enqueue_customizer_styles' );
 

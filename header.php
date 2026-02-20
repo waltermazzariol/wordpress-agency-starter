@@ -19,8 +19,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 
-	<!-- Font preconnect for performance -->
+	<!-- Preconnect hints for performance -->
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+	<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+	<!-- Preload critical CSS -->
+	<link rel="preload" href="<?php echo esc_url( get_template_directory_uri() . '/dist/css/bundle.css' ); ?>" as="style">
 
 	<?php
 	// Determine the best image for social sharing (OG & Twitter).
