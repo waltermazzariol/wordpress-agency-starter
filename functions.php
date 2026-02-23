@@ -293,6 +293,12 @@ function wp_guarapo_page_scripts() {
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 		) );
 	}
+
+	if ( is_single() ) {
+		$file = get_template_directory() . '/dist/js/instagram-share.js';
+		$ver  = file_exists( $file ) ? filemtime( $file ) : _S_VERSION;
+		wp_enqueue_script( 'wp-guarapo-instagram-share', get_template_directory_uri() . '/dist/js/instagram-share.js', array(), $ver, true );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'wp_guarapo_page_scripts' );
 

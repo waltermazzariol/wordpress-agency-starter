@@ -43,3 +43,33 @@ a.share-email:hover {
 a.share-pinterest:hover {
   color: #b5071a;
 }
+
+// Instagram Stories button — mobile only
+@media (hover: hover) and (pointer: fine) {
+  .share-instagram-li {
+    display: none;
+  }
+}
+
+.share-instagram-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+
+  i {
+    font-size: 1.2rem;
+    color: $primary;
+  }
+
+  &:hover i {
+    color: #e1306c;
+    opacity: 0.8;
+  }
+
+  &.loading i {
+    opacity: 0.4;
+  }
+}

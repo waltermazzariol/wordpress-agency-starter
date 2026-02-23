@@ -68,6 +68,9 @@ const purgecssConfig = {
       /^category-filters/,
       // Contact Form 7
       /^wpcf7/,
+      // Instagram Stories share
+      /^ig-share-modal/,
+      /^share-instagram-btn/,
     ],
     deep: [
       /modal/,
@@ -133,7 +136,8 @@ export const stylesProd = () => {
 const standaloneScripts = [
   'src/assets/js/category-filter.js',
   'src/assets/js/front-page.js',
-  'src/assets/js/blog-filter.js'
+  'src/assets/js/blog-filter.js',
+  'src/assets/js/instagram-share.js'
 ];
 
 export const watchForChanges = () => {

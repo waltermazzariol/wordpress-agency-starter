@@ -38,5 +38,25 @@
             <span class="screen-reader-text">Share on Threads</span>
         </a>
     </li>
+    <li class="share-instagram-li">
+        <button
+            class="share-instagram-btn"
+            title="Share on Instagram Stories"
+            data-title="<?php echo esc_attr(get_the_title()); ?>"
+            data-url="<?php echo esc_attr(home_url()); ?>"
+            data-reading-time="<?php echo esc_attr(reading_time()); ?>"
+            data-category="<?php
+  $cats = get_the_category();
+  echo esc_attr(!empty($cats) ? $cats[0]->name : '');
+?>"
+            data-author="<?php echo esc_attr(get_the_author_meta('display_name')); ?>"
+            data-avatar="<?php echo esc_attr(get_avatar_url(get_the_author_meta('ID'))); ?>"
+            data-image="<?php echo esc_attr(get_the_post_thumbnail_url(null, 'large') ?: get_template_directory_uri() . '/dist/images/hero.jpg'); ?>"
+            data-excerpt="<?php echo esc_attr(wp_strip_all_tags(get_the_excerpt())); ?>"
+        >
+            <i class="fab fa-instagram" aria-hidden="true"></i>
+            <span class="screen-reader-text">Share on Instagram Stories</span>
+        </button>
+    </li>
 </ul>
 </div>
