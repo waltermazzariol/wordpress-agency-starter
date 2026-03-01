@@ -61,12 +61,18 @@
 		$og_image = get_template_directory_uri() . '/dist/assets/images/hero.jpg';
 	}
 
-	// Determine description for OG/Twitter tags
+	// Determine description for SEO, OG, and Twitter tags.
+	// Priority: manual _seo_description → excerpt → content snippet → site tagline.
 	$og_description = '';
-	if (is_singular() && has_excerpt()) {
-		$og_description = get_the_excerpt();
-	} elseif (is_singular()) {
-		$og_description = wp_trim_words(strip_shortcodes(get_the_content()), 30, '...');
+	if (is_singular()) {
+		$seo_description = get_post_meta(get_the_ID(), '_seo_description', true);
+		if ($seo_description) {
+			$og_description = $seo_description;
+		} elseif (has_excerpt()) {
+			$og_description = get_the_excerpt();
+		} else {
+			$og_description = wp_trim_words(strip_shortcodes(get_the_content()), 30, '...');
+		}
 	} elseif (is_category()) {
 		$og_description = category_description();
 	}
@@ -85,6 +91,9 @@
 		$og_url = home_url(add_query_arg(array(), $wp->request));
 	}
 	?>
+
+	<!-- SEO Meta Description -->
+	<meta name="description" content="<?php echo esc_attr(wp_strip_all_tags($og_description)); ?>">
 
 	<!-- Open Graph Meta Tags -->
 	<meta property="og:title" content="<?php echo esc_attr(wp_get_document_title()); ?>">

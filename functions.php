@@ -767,3 +767,79 @@ function wp_guarapo_save_category_image($term_id) {
     }
 }
 add_action('edited_category', 'wp_guarapo_save_category_image');
+
+/**
+ * SEO Description Meta Box
+ */
+function wp_guarapo_seo_meta_box() {
+    add_meta_box(
+        'wp_guarapo_seo_description',
+        esc_html__( 'SEO Description', 'wp_guarapo' ),
+        'wp_guarapo_seo_meta_box_render',
+        array( 'post', 'page' ),
+        'normal',
+        'high'
+    );
+}
+add_action( 'add_meta_boxes', 'wp_guarapo_seo_meta_box' );
+
+function wp_guarapo_seo_meta_box_render( $post ) {
+    wp_nonce_field( 'wp_guarapo_save_seo_description', 'wp_guarapo_seo_nonce' );
+    $value = get_post_meta( $post->ID, '_seo_description', true );
+    ?>
+    <p>
+        <label for="wp_guarapo_seo_description">
+            <?php esc_html_e( 'Custom meta description for search engines. Leave blank to use the excerpt or content snippet.', 'wp_guarapo' ); ?>
+        </label>
+    </p>
+    <textarea
+        id="wp_guarapo_seo_description"
+        name="wp_guarapo_seo_description"
+        rows="3"
+        style="width:100%;resize:vertical;"
+        maxlength="160"
+    ><?php echo esc_textarea( $value ); ?></textarea>
+    <p id="wp_guarapo_seo_char_count" style="color:#646970;font-size:12px;">
+        <?php
+        $count = mb_strlen( $value );
+        printf(
+            esc_html__( '%d / 160 characters (recommended: 120\u2013160)', 'wp_guarapo' ),
+            $count
+        );
+        ?>
+    </p>
+    <script>
+    (function() {
+        var textarea = document.getElementById('wp_guarapo_seo_description');
+        var counter  = document.getElementById('wp_guarapo_seo_char_count');
+        if (!textarea || !counter) return;
+        textarea.addEventListener('input', function() {
+            var len = textarea.value.length;
+            var color = (len >= 120 && len <= 160) ? '#00a32a' : (len > 160 ? '#d63638' : '#646970');
+            counter.style.color = color;
+            counter.textContent = len + ' / 160 characters (recommended: 120\u2013160)';
+        });
+    })();
+    </script>
+    <?php
+}
+
+function wp_guarapo_seo_meta_box_save( $post_id ) {
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    if ( ! isset( $_POST['wp_guarapo_seo_nonce'] ) ||
+         ! wp_verify_nonce( $_POST['wp_guarapo_seo_nonce'], 'wp_guarapo_save_seo_description' ) ) return;
+
+    $post_type = get_post_type( $post_id );
+    $cap = ( 'page' === $post_type ) ? 'edit_page' : 'edit_post';
+    if ( ! current_user_can( $cap, $post_id ) ) return;
+
+    if ( isset( $_POST['wp_guarapo_seo_description'] ) ) {
+        $new_value = sanitize_textarea_field( wp_unslash( $_POST['wp_guarapo_seo_description'] ) );
+        if ( '' !== $new_value ) {
+            update_post_meta( $post_id, '_seo_description', $new_value );
+        } else {
+            delete_post_meta( $post_id, '_seo_description' );
+        }
+    }
+}
+add_action( 'save_post', 'wp_guarapo_seo_meta_box_save' );
