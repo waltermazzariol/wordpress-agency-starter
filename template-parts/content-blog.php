@@ -52,7 +52,7 @@
 					<span class="blog-classic-entry__reading-time"><?php echo esc_html( reading_time() ); ?></span>
 				</div>
 
-				<div class="blog-classic-entry__excerpt">
+				<div class="blog-classic-entry__excerpt mb-5">
 					<?php
 					$content = apply_filters( 'the_content', get_the_content() );
 					$content = str_replace( array( '</p>', '<br />', '<br>' ), "\n\n", $content );
@@ -61,8 +61,8 @@
 					$content = mb_strimwidth( $content, 0, 600, '...' );
 					echo wpautop( $content );
 					?>
-					<a href="<?php echo esc_url( get_permalink() ); ?>" class="blog-classic-entry__read-more">Read more</a>
 				</div>
+				<a href="<?php echo esc_url( get_permalink() ); ?>" class="button button-outline">Read more</a>
 			</div>
 		</div>
 	</div>

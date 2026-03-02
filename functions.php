@@ -564,11 +564,7 @@ function wp_guarapo_filter_blog_posts() {
 
 	if ($category_id !== 'all' && is_numeric($category_id)) {
 		$args['cat'] = intval($category_id);
-	} else {
-		if ($strava_cat_id) {
-			$args['category__not_in'] = array($strava_cat_id);
-		}
-	}
+	} // else: no category filter, show all posts
 
 	$query = new WP_Query($args);
 
@@ -605,6 +601,7 @@ function wp_guarapo_filter_blog_posts() {
 }
 add_action('wp_ajax_filter_blog_posts', 'wp_guarapo_filter_blog_posts');
 add_action('wp_ajax_nopriv_filter_blog_posts', 'wp_guarapo_filter_blog_posts');
+
 
 // recent posts shortcode
 function guarapo_recent_posts_shortcode($atts, $content = null) {
