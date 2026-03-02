@@ -12,7 +12,7 @@
 <section class="no-results not-found">
 	<header class="container mt-5">
 	<div class="d-flex justify-content-center">
-		<h1><?php esc_html_e( 'No hay resultados', 'wp_guarapo' ); ?></h1>
+		<h1><?php esc_html_e( 'No results found', 'wp_guarapo' ); ?></h1>
 	</div>
 	</header><!-- .page-header -->
 

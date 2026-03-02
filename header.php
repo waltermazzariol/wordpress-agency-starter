@@ -138,11 +138,11 @@
 						<?php dynamic_sidebar('header_area_icons'); ?>
 					</span>
 					<div class="button button-outline d-none d-lg-block d-xl-block">
-						<a href="https://twitter.com/messages/compose?recipient_id=2344175338" target="_blank" rel="noopener noreferrer">Get in touch →</a>
+						<a href="mailto:mazzariolwalter@gmail.com" target="_blank" rel="noopener noreferrer">Get in touch →</a>
 					</div>
 					<div class="button button-outline d-sm-block d-md-block d-lg-none">
-						<a href="https://twitter.com/messages/compose?recipient_id=2344175338" target="_blank" rel="noopener noreferrer">
-							<i class="fab fa-x-twitter" aria-label='icon'></i>
+						<a href="mailto:mazzariolwalter@gmail.com" target="_blank" rel="noopener noreferrer">
+							<i class="fa-solid fa-envelope" aria-label='icon'></i>
 						</a>
 					</div>
 			</nav>

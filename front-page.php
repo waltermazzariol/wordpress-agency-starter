@@ -167,7 +167,7 @@ get_header();
 			</div>
 			<div class="row justify-content-center my-5">
 				<span class="col-4 text-center">
-					<a class="button button-outline" href="<?php echo esc_url(get_category_link(get_cat_ID('strava-activities'))); ?>" rel="noopener noreferrer">Read more →</a>
+					<a class="button button-outline" href="/category/strava-activities/run/" rel="noopener noreferrer">Read more →</a>
 				</span>
 			</div>
 		</div>

@@ -69,3 +69,6 @@ Two independent systems — do not mix them up:
 
 ### Customizer Colors
 Three options registered: `accent_color`, `footer_color`, `footer_text_color`. Inline CSS output via `theme_get_customizer_css()` hooked to `wp_head`.
+
+### Actions
+- Increase the version of the them with each improvement

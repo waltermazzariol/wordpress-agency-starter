@@ -45,6 +45,15 @@
             <?php the_posts_pagination(); ?>
         </div><!-- .entry-content -->
 
+        <div class="mt-3 text-center">
+            <hr class="center">
+            <small> Share this story</small></br>
+            <?php my_share_buttons(); ?>
+        </div>
+        <div>
+            <?php create_relatedposts_shortcode() ?>
+        </div>
+
         <?php if ( get_edit_post_link() ) : ?>
         <footer class="entry-footer">
         <?php
@@ -65,15 +74,6 @@
 				'</span>'
 			);
 			?>
-        <div class="mt-3 text-center">
-            <hr class="center">
-            <small> Share this story</small></br>
-            <?php my_share_buttons(); ?>
-        </div>
-        <div>
-            <?php create_relatedposts_shortcode() ?>
-        </div>      
-           
         </footer><!-- .entry-footer -->
         <?php endif; ?>
 </article><!-- #post-<?php the_ID(); ?> -->

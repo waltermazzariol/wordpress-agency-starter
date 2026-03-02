@@ -465,7 +465,7 @@ function wpdocs_excerpt_more( $more ) {
     if ( ! is_single() ) {
         $more = sprintf( '<a class="read-more d-block" href="%1$s">%2$s</a>',
             esc_url( get_permalink( get_the_ID() ) ),
-            __( 'Leer más', 'textdomain' )
+            __( 'Read more', 'textdomain' )
         );
     }
 
@@ -670,16 +670,19 @@ add_theme_support( 'responsive-embeds' );
  * Display related posts section
  */
 function create_relatedposts_shortcode() {
-	// Custom WP query relatedposts
+	$categories = wp_get_post_categories( get_the_ID() );
+
 	$args_relatedposts = array(
 		'posts_per_page' => '3',
-		'order' => 'DESC',
+		'order'          => 'DESC',
+		'post__not_in'   => array( get_the_ID() ),
+		'category__in'   => $categories,
 	);
 
 	$relatedposts = new WP_Query( $args_relatedposts );
 
 	if ( $relatedposts->have_posts() ) {
-		echo '<div class="container mt-5"><div class="row"><hr><h3 class="mt-5 mb-4">Artículos Relacionados</h3>';
+		echo '<div class="container mt-5"><div class="row"><hr><h3 class="mt-5 mb-4">Related posts</h3>';
 		while ( $relatedposts->have_posts() ) {
 			$relatedposts->the_post();
 			get_template_part( 'template-parts/content', 'loop' );
