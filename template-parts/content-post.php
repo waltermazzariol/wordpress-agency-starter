@@ -45,11 +45,43 @@
             <?php the_posts_pagination(); ?>
         </div><!-- .entry-content -->
 
+        <?php
+        // Post navigation within the same category
+        $prev_post = get_previous_post(true); // true = in same term (category)
+        $next_post = get_next_post(true);
+
+        if ($prev_post || $next_post) : ?>
+        <nav class="post-category-nav container" aria-label="<?php esc_attr_e('Posts navigation', 'wp_guarapo'); ?>">
+            <div class="row justify-content-md-center">
+                <div class="col-md-12">
+                    <div class="post-category-nav__links">
+
+                        <?php if ($prev_post) : ?>
+                        <a href="<?php echo esc_url(get_permalink($prev_post)); ?>" class="post-category-nav__item post-category-nav__item--prev">
+                            <span class="post-category-nav__label"><?php esc_html_e('Previous', 'wp_guarapo'); ?></span>
+                            <span class="post-category-nav__title"><?php echo esc_html(get_the_title($prev_post)); ?></span>
+                        </a>
+                        <?php endif; ?>
+
+                        <?php if ($next_post) : ?>
+                        <a href="<?php echo esc_url(get_permalink($next_post)); ?>" class="post-category-nav__item post-category-nav__item--next">
+                            <span class="post-category-nav__label"><?php esc_html_e('Next', 'wp_guarapo'); ?></span>
+                            <span class="post-category-nav__title"><?php echo esc_html(get_the_title($next_post)); ?></span>
+                        </a>
+                        <?php endif; ?>
+
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <?php endif; ?>
+
         <div class="mt-3 text-center">
-            <hr class="center">
+            <hr class="center my-5">
             <small> Share this story</small></br>
             <?php my_share_buttons(); ?>
         </div>
+
         <div>
             <?php create_relatedposts_shortcode() ?>
         </div>
