@@ -41,6 +41,10 @@
 						</a>
 					<?php endif; ?>
 
+					<?php if ( has_tag('es') ) : ?>
+						<span class="entry-lang">🇪🇸 En español</span>
+					<?php endif; ?>
+
 					<span class="blog-classic-entry__separator">|</span>
 					<span class="blog-classic-entry__reading-time"><?php echo esc_html( reading_time() ); ?></span>
 				</div>

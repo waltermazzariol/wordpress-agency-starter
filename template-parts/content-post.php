@@ -27,6 +27,11 @@
                             echo '<span class="reading-time">' . reading_time() . '</span>';
 						?>
                     </div><!-- .entry-meta -->
+                    <?php if ( has_tag('es') ) : ?>
+                    <div class="text-center mt-2">
+                        <span class="entry-lang">🇪🇸 En español</span>
+                    </div>
+                    <?php endif; ?>
                     <?php endif; ?>
                     <div class="mt-3">
                         <?php my_share_buttons(); ?>

@@ -19,7 +19,7 @@
     border-radius: 25px;
     background-color: $light-black;
     color: $white;
-    
+
   }
   .entry-meta {
     margin-top: 0.5rem;
@@ -45,6 +45,16 @@
     padding-left: 10px;
     font-size: 0.9rem;
   }
+}
+
+.entry-lang {
+  font-size: 0.75rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 25px;
+  margin-left: 5px;
+  background-color: $gray-100;
+  color: $light-black;
+  display: inline-block;
 }
 
 .pagination {

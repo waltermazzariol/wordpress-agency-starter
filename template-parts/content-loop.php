@@ -34,6 +34,9 @@
 			if (!empty($categories)) {
 				echo '<a href="' . esc_url(get_category_link($categories[0]->term_id)) . '"><span class="entry-cat">' . esc_html($categories[0]->name) . '</span></a>';
 			}
+			if ( has_tag('es') ) {
+				echo '<span class="entry-lang">🇪🇸 En español</span>';
+			}
 		 ?>
 
 		 <div class="entry-meta mb-2 small">
