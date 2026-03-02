@@ -36,15 +36,18 @@
 					if ( ! empty( $categories ) ) :
 						?>
 						<span class="blog-classic-entry__separator">|</span>
-						<a href="<?php echo esc_url( get_category_link( $categories[0]->term_id ) ); ?>" class="blog-classic-entry__category">
-							<?php echo esc_html( $categories[0]->name ); ?>
-						</a>
-					<?php endif; ?>
+						
 
 					<?php if ( has_tag('es') ) : ?>
 						<span class="entry-lang">🇪🇸 En español</span>
-					<?php endif; ?>
+						<span class="blog-classic-entry__separator">|</span>
 
+						<?php endif; ?>
+
+					<span class="entry-cat">
+							<?php echo esc_html( $categories[0]->name ); ?>
+						</span>
+					<?php endif; ?>
 					<span class="blog-classic-entry__separator">|</span>
 					<span class="blog-classic-entry__reading-time"><?php echo esc_html( reading_time() ); ?></span>
 				</div>

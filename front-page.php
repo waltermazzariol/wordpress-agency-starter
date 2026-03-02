@@ -34,11 +34,9 @@ get_header();
 				</div>
 				<div class="col-lg-7 col-md-12">
 					<div class="mb-4">
-						<p>I'm a system engineer with more than 5 years of experience as a Product Manager and more than 10 years as a web developer, taking on challenges that motivate me to develop new skills and knowledge.</p>
-						<p>Currently at <u><a href="https://www.edreams.com" target="_blank" rel="noopener noreferrer">eDreams ODIGEO</a></u> working as PM in the checkout area, with incredible human capital that has made me grow. personally and professionally.</p>
-						<p>Additionally, I have been running a digital agency called <u><a href="https://guarapomedia.com" target="_blank" rel="noopener noreferrer">Guarapo Media</a></u> since 2014 with two partners. From this project our most recent product <u><a href="https://wansite.co" target="_blank" rel="noopener noreferrer">wansite.co</a></u> was born, a web builder with which we help creators and artists to build microsites of their projects and services.</p>
-						<p>Agile methodologies fascinated me and how they allow teams to generate a work dynamic that reduces 'time to market'.</p>
-						<p>I'm constantly connected to the changes happening in the technology sector, but I am also an amateur runner so feel free to connect with me through <u><a href="https://www.strava.com/athletes/36809051" target="_blank" rel="noopener noreferrer">Strava</a></u>.</p>
+					<p>I'm Walter; a venezuelan PM living in Barcelona. I've spent the last decade building things on the internet, first as a developer, now leading product at eDreams. This is where I write about that work, about running long distances, and about figuring things out as I go.</p>
+					<p>Writing helps me think. If something here is useful or resonates with you, even better.</p>
+					<p>No polish, just honest notes from the process. Start with the blog, or say hi.</p>
 					</div>
 				</div>
     		</div>
@@ -88,39 +86,18 @@ get_header();
 		</div>
 
 
-		<!-- Corporate Blog Section -->
+		<!-- Product Management Blog Section  -->
 		<div class="container mt-5">
 			<div class="row">
 				<div class="py-3 col-lg-12">
 					<h2>BLOG *</h2>
 				</div>
-				<div class="col-12">
-					<div class="category-filters mb-4">
-						<button class="button button-outline button-small filter-btn active" data-category="all">All</button>
-						<?php
-						$strava_cat = get_category_by_slug('strava-activities');
-						$strava_cat_id = $strava_cat ? $strava_cat->term_id : 0;
-						$run_cat = get_category_by_slug('run');
-						$run_cat_id = $run_cat ? $run_cat->term_id : 0;
-						$exclude_cats = array_filter(array($strava_cat_id, $run_cat_id));
-						$categories = get_categories(array(
-							'hide_empty' => true,
-							'exclude' => $exclude_cats
-						));
-						foreach ($categories as $category) :
-						?>
-							<button class="button button-outline button-small filter-btn" data-category="<?php echo esc_attr($category->term_id); ?>">
-								<?php echo esc_html($category->name); ?>
-							</button>
-						<?php endforeach; ?>
-					</div>
-				</div>
 			</div>
-			<div class="row" id="posts-container">
+			<div class="row">
 				<?php
 				$blog_args = array(
-					'posts_per_page' => 12,
-					'category__not_in' => $exclude_cats
+					'posts_per_page' => 6,
+					'category_name' => 'product-management'
 				);
 				$blog_posts = new WP_Query($blog_args);
 
@@ -135,10 +112,11 @@ get_header();
 			</div>
 			<div class="row justify-content-center my-5">
 				<span class="col-4 text-center">
-					<a class="button button-outline" href="/blog" rel="noopener noreferrer">Read more →</a>
+					<a class="button button-outline" href="/category/product-management/" rel="noopener noreferrer">Read more →</a>
 				</span>
 			</div>
 		</div>
+
 
 		<!-- Run Blog Section (Strava Activities) -->
 		<div class="container mt-5">
@@ -168,6 +146,37 @@ get_header();
 			<div class="row justify-content-center my-5">
 				<span class="col-4 text-center">
 					<a class="button button-outline" href="/category/strava-activities/run/" rel="noopener noreferrer">Read more →</a>
+				</span>
+			</div>
+		</div>
+
+		<!-- Journal Blog Section (Notes) -->
+		<div class="container mt-5">
+			<div class="row">
+				<div class="py-3 col-lg-12">
+					<h2>NOTES *</h2>
+				</div>
+			</div>
+			<div class="row">
+				<?php
+				$notes_args = array(
+					'posts_per_page' => 3,
+					'category_name' => 'notes'
+				);
+				$notes_posts = new WP_Query($notes_args);
+
+				if ($notes_posts->have_posts()) :
+					while ($notes_posts->have_posts()) :
+						$notes_posts->the_post();
+						get_template_part('template-parts/content', 'loop');
+					endwhile;
+				endif;
+				wp_reset_postdata();
+				?>
+			</div>
+			<div class="row justify-content-center my-5">
+				<span class="col-4 text-center">
+					<a class="button button-outline" href="/category/notes/" rel="noopener noreferrer">Read more →</a>
 				</span>
 			</div>
 		</div>

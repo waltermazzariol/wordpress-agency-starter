@@ -13,14 +13,7 @@
     top: 10px;
     left: 10px;
   }
-  .entry-cat {
-    font-size: 0.75rem;
-    padding: 0.3rem 0.8rem;
-    border-radius: 25px;
-    background-color: $light-black;
-    color: $white;
-
-  }
+ 
   .entry-meta {
     margin-top: 0.5rem;
     color: $primary;
@@ -45,6 +38,15 @@
     padding-left: 10px;
     font-size: 0.9rem;
   }
+}
+
+.entry-cat {
+  font-size: 0.75rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 25px;
+  background-color: $light-black;
+  color: $white;
+
 }
 
 .entry-lang {

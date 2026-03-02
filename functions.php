@@ -550,13 +550,16 @@ add_action('wp_ajax_nopriv_filter_posts_by_category', 'wp_guarapo_filter_posts_b
  * AJAX handler for category filtering on blog page (classic layout)
  */
 function wp_guarapo_filter_blog_posts() {
-	$category_id = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : 'all';
-	$strava_cat = get_category_by_slug('strava-activities');
-	$strava_cat_id = $strava_cat ? $strava_cat->term_id : 0;
+	$category_id    = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : 'all';
+	$paged          = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
+	$posts_per_page = get_option('posts_per_page', 10);
+	$strava_cat     = get_category_by_slug('strava-activities');
+	$strava_cat_id  = $strava_cat ? $strava_cat->term_id : 0;
 
 	$args = array(
-		'posts_per_page' => -1,
-		'post_status' => 'publish',
+		'posts_per_page' => $posts_per_page,
+		'paged'          => $paged,
+		'post_status'    => 'publish',
 	);
 
 	if ($category_id !== 'all' && is_numeric($category_id)) {
@@ -569,6 +572,7 @@ function wp_guarapo_filter_blog_posts() {
 
 	$query = new WP_Query($args);
 
+	ob_start();
 	if ($query->have_posts()) :
 		while ($query->have_posts()) :
 			$query->the_post();
@@ -577,9 +581,27 @@ function wp_guarapo_filter_blog_posts() {
 	else :
 		echo '<p>No posts found in this category.</p>';
 	endif;
+	$posts_html = ob_get_clean();
+
+	$links = paginate_links( array(
+		'base'      => '%_%',
+		'format'    => '?paged=%#%',
+		'current'   => $paged,
+		'total'     => $query->max_num_pages,
+		'type'      => 'plain',
+		'prev_text' => '&laquo; Prev',
+		'next_text' => 'Next &raquo;',
+	) );
+
+	$pagination_html = $links
+		? '<nav class="navigation pagination" aria-label="Posts pagination"><h2 class="screen-reader-text">Posts pagination</h2><div class="nav-links">' . $links . '</div></nav>'
+		: '';
 
 	wp_reset_postdata();
-	wp_die();
+	wp_send_json_success( array(
+		'posts'      => $posts_html,
+		'pagination' => $pagination_html,
+	) );
 }
 add_action('wp_ajax_filter_blog_posts', 'wp_guarapo_filter_blog_posts');
 add_action('wp_ajax_nopriv_filter_blog_posts', 'wp_guarapo_filter_blog_posts');

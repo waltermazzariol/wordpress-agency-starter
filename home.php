@@ -55,6 +55,15 @@ get_header();
 					?>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-12" id="blog-pagination">
+					<?php the_posts_pagination( array(
+						'mid_size'  => 2,
+						'prev_text' => '&laquo; Prev',
+						'next_text' => 'Next &raquo;',
+					) ); ?>
+				</div>
+			</div>
 		</div>
 
 	<?php

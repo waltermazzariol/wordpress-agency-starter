@@ -27,11 +27,20 @@
                             echo '<span class="reading-time">' . reading_time() . '</span>';
 						?>
                     </div><!-- .entry-meta -->
-                    <?php if ( has_tag('es') ) : ?>
-                    <div class="text-center mt-2">
-                        <span class="entry-lang">🇪🇸 En español</span>
-                    </div>
+                    <?php $categories = get_the_category();
+                    if ( ! empty( $categories ) ) :
+                        ?>
+                        
+                        <div class="text-center mt-2">
+                        <?php if ( has_tag('es') ) : ?>
+                            <span class="entry-lang">🇪🇸 En español</span>
+                            <span class="blog-classic-entry__separator">|</span>
                     <?php endif; ?>
+                        <span class="entry-cat">
+                            <?php echo esc_html( $categories[0]->name ); ?>
+                        </span>
+                        <?php endif; ?>
+                    </div>
                     <?php endif; ?>
                     <div class="mt-3">
                         <?php my_share_buttons(); ?>
