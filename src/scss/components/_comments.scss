@@ -1,0 +1,346 @@
+// -----------------------------------------------------------------------------
+// Comments — modern editorial style
+// WP default markup: .comment-body > .comment-author, .comment-meta,
+//                    .comment-content, .reply
+// -----------------------------------------------------------------------------
+
+.comments-area {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 2px solid $dark-black;
+}
+
+// Section heading
+.comments-title {
+  font-family: $headings-font-family;
+  font-size: $h3-font-size;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: $dark-black;
+  margin-bottom: 2rem;
+
+  span {
+    display: block;
+    font-family: $font-family-base;
+    font-size: 0.85rem;
+    font-weight: $font-weight-normal;
+    text-transform: none;
+    letter-spacing: 0;
+    color: lighten($light-black, 20%);
+    margin-top: 0.25rem;
+  }
+}
+
+// ---- Comment list ----
+
+.comment-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2.5rem;
+
+  // Nested replies
+  ol {
+    list-style: none;
+    padding-left: 1.5rem;
+    margin-top: 0;
+    border-left: 2px solid $gray-200;
+  }
+}
+
+.comment {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid $gray-200;
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+// Comment body is a block container; we style children individually
+// to get: [avatar + name] on row 1, [date] indented on row 2, then content, then reply.
+
+.comment-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.2rem;
+
+  img {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .fn {
+    font-family: $font-family-base;
+    font-weight: $font-weight-medium;
+    font-size: 0.95rem;
+    font-style: normal;
+    color: $dark-black;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Date line — indented to align with name (avatar 40px + gap 0.75rem)
+.comment-meta {
+  margin-left: calc(40px + 0.75rem);
+  margin-bottom: 0.75rem;
+  font-size: 0.8rem;
+  color: lighten($light-black, 28%);
+
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  em.comment-awaiting-moderation {
+    display: block;
+    font-size: 0.78rem;
+    font-style: italic;
+    margin-top: 0.2rem;
+    color: lighten($light-black, 35%);
+  }
+}
+
+.comment-content {
+  color: $text-color;
+  font-size: $font-size-base;
+  line-height: 1.75;
+
+  p {
+    margin-bottom: 0.75rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.reply {
+  margin-top: 0.75rem;
+
+  .comment-reply-link {
+    font-size: 0.78rem;
+    font-weight: $font-weight-medium;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $dark-black;
+    text-decoration: none;
+    border-bottom: 1px solid $dark-black;
+    padding-bottom: 1px;
+    transition: opacity 0.15s ease;
+
+    &:hover {
+      opacity: 0.45;
+    }
+  }
+}
+
+// Comment navigation
+.comments-pagination {
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+}
+
+.no-comments {
+  color: lighten($light-black, 28%);
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+// ---- Comment form ----
+
+.comment-respond {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid $gray-200;
+}
+
+.comment-reply-title {
+  font-family: $headings-font-family;
+  font-size: $h3-font-size;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: $dark-black;
+  margin-bottom: 1.5rem;
+
+  small {
+    display: block;
+    font-family: $font-family-base;
+    font-size: 0.82rem;
+    font-weight: $font-weight-normal;
+    text-transform: none;
+    letter-spacing: 0;
+    color: lighten($light-black, 25%);
+    margin-top: 0.35rem;
+
+    a {
+      color: $dark-black;
+      text-decoration: underline;
+
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+  }
+}
+
+// ---- Comment form (progressive disclosure) ----
+// WP renders: .comment-form-email, .comment-form-cookies-consent, then textarea (.comment-form-comment), then .form-submit
+// We use flex + order to put textarea first visually.
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+
+  // Visual order: textarea → email → cookies → submit
+  .comment-form-comment        { order: 1; }
+  .comment-form-email          { order: 2; }
+  .comment-form-cookies-consent { order: 3; }
+  .form-submit                 { order: 4; }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: $font-weight-medium;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: $dark-black;
+    margin-bottom: 0.4rem;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="url"],
+  textarea {
+    display: block;
+    width: 100%;
+    padding: 0.6rem 0.875rem;
+    background-color: $gray-100;
+    border: 1px solid $gray-200;
+    border-radius: 2px;
+    color: $dark-black;
+    font-family: $font-family-base;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+    min-width: 0;
+
+    &:focus {
+      outline: none;
+      border-color: $dark-black;
+      background-color: $white;
+    }
+
+    &::placeholder {
+      color: lighten($light-black, 30%);
+    }
+  }
+
+  // --- Textarea: slim collapsed state ---
+  textarea#comment {
+    height: 46px;
+    min-height: unset;
+    resize: none;
+    overflow: hidden;
+    cursor: text;
+    transition: height 0.3s ease;
+  }
+
+  // --- Hidden fields in collapsed state ---
+  .comment-form-email,
+  .comment-form-cookies-consent,
+  .form-submit {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-top: 0;
+    pointer-events: none;
+    transition: max-height 0.3s ease, opacity 0.25s ease 0.05s, margin-top 0.3s ease;
+  }
+
+  // --- Expanded state (class added by JS on textarea focus) ---
+  &.is-expanded {
+    textarea#comment {
+      height: 130px;
+      resize: vertical;
+      overflow: auto;
+    }
+
+    .comment-form-email,
+    .comment-form-cookies-consent,
+    .form-submit {
+      max-height: 160px;
+      opacity: 1;
+      margin-top: 1rem;
+      pointer-events: auto;
+    }
+  }
+
+  // Cookie / privacy checkbox row
+  .comment-form-cookies-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+
+    input[type="checkbox"] {
+      width: auto;
+      min-width: 0;
+      margin-top: 0.25rem;
+      flex-shrink: 0;
+    }
+
+    label {
+      font-size: 0.8rem;
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: $font-weight-normal;
+      color: lighten($light-black, 20%);
+    }
+  }
+
+  .form-submit {
+    .submit {
+      display: inline-block;
+      padding: 0.65rem 2rem;
+      background-color: $dark-black;
+      color: $white;
+      border: 2px solid $dark-black;
+      border-radius: 2px;
+      font-family: $font-family-base;
+      font-size: 0.82rem;
+      font-weight: $font-weight-medium;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease;
+
+      &:hover {
+        background-color: $white;
+        color: $dark-black;
+      }
+    }
+  }
+}

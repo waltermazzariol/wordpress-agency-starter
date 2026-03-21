@@ -71,6 +71,12 @@ const purgecssConfig = {
       // Instagram Stories share
       /^ig-share-modal/,
       /^share-instagram-btn/,
+      // Comments
+      /^comment/,
+      /^comments/,
+      /^no-comments/,
+      /^bypostauthor/,
+      /^depth-/,
     ],
     deep: [
       /modal/,
@@ -137,7 +143,8 @@ const standaloneScripts = [
   'src/assets/js/category-filter.js',
   'src/assets/js/front-page.js',
   'src/assets/js/blog-filter.js',
-  'src/assets/js/instagram-share.js'
+  'src/assets/js/instagram-share.js',
+  'src/assets/js/comments.js'
 ];
 
 export const watchForChanges = () => {

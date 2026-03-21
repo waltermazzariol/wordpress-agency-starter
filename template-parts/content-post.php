@@ -96,6 +96,16 @@
             <?php my_share_buttons(); ?>
         </div>
 
+        <?php if ( comments_open() || get_comments_number() ) : ?>
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col-md-8">
+                    <?php comments_template(); ?>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+
         <div>
             <?php create_relatedposts_shortcode() ?>
         </div>

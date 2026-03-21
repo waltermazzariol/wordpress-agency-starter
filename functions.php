@@ -181,8 +181,33 @@ function wp_guarapo_scripts()
 	if (is_singular() && comments_open() && get_option('thread_comments')) {
 		wp_enqueue_script('comment-reply');
 	}
+
+	if ( is_singular() && comments_open() ) {
+		wp_enqueue_script(
+			'wp-guarapo-comments',
+			get_template_directory_uri() . '/dist/js/comments.js',
+			array( 'jquery' ),
+			wp_get_theme()->get( 'Version' ),
+			true
+		);
+	}
 }
 add_action('wp_enqueue_scripts', 'wp_guarapo_scripts');
+
+// Remove Name and Website fields from comment form; keep only Email + Comment
+add_filter( 'comment_form_default_fields', function( $fields ) {
+	unset( $fields['author'] );
+	unset( $fields['url'] );
+	return $fields;
+} );
+
+// Auto-fill author as "Anonymous" when the name field is omitted
+add_filter( 'preprocess_comment', function( $commentdata ) {
+	if ( empty( $commentdata['comment_author'] ) ) {
+		$commentdata['comment_author'] = 'Anonymous';
+	}
+	return $commentdata;
+} );
 
 /**
  * Add defer attribute to jQuery and all scripts that depend on it.
@@ -194,6 +219,7 @@ function wp_guarapo_defer_scripts( $tag, $handle ) {
 		'jquery-migrate',
 		'wp-guarapo-front-page',
 		'wp-guarapo-blog-filter',
+		'wp-guarapo-comments',
 	);
 	if ( in_array( $handle, $defer_handles, true ) && strpos( $tag, ' defer' ) === false ) {
 		return str_replace( ' src=', ' defer src=', $tag );
