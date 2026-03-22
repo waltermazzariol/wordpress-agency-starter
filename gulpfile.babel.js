@@ -77,6 +77,8 @@ const purgecssConfig = {
       /^no-comments/,
       /^bypostauthor/,
       /^depth-/,
+      /^reply/,
+      /^form-submit/,
     ],
     deep: [
       /modal/,

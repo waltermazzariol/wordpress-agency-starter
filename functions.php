@@ -194,9 +194,8 @@ function wp_guarapo_scripts()
 }
 add_action('wp_enqueue_scripts', 'wp_guarapo_scripts');
 
-// Remove Name and Website fields from comment form; keep only Email + Comment
+// Remove Website field from comment form; keep Name + Email + Comment
 add_filter( 'comment_form_default_fields', function( $fields ) {
-	unset( $fields['author'] );
 	unset( $fields['url'] );
 	return $fields;
 } );

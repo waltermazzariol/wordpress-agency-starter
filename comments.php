@@ -58,7 +58,7 @@ if ( post_password_required() ) {
 		'comment_notes_before' => '',
 		'title_reply'          => have_comments() ? '' : esc_html__( 'Responses', 'wp_guarapo' ),
 		'title_reply_to'       => esc_html__( 'Response to %s', 'wp_guarapo' ),
-		'comment_field'        => '<p class="comment-form-comment"><label for="comment">' . esc_html__( 'Comment', 'wp_guarapo' ) . '</label><textarea id="comment" name="comment" cols="45" rows="8" placeholder="' . esc_attr__( 'What are your thoughts?', 'wp_guarapo' ) . '" required></textarea></p><input type="hidden" name="author" value="Anonymous">',
+		'comment_field'        => '<p class="comment-form-comment"><label for="comment">' . esc_html__( 'Comment', 'wp_guarapo' ) . '</label><textarea id="comment" name="comment" cols="45" rows="8" placeholder="' . esc_attr__( 'What are your thoughts?', 'wp_guarapo' ) . '" required></textarea></p>',
 	) );
 	?>
 

@@ -211,11 +211,12 @@
   display: flex;
   flex-direction: column;
 
-  // Visual order: textarea → email → cookies → submit
+  // Visual order: textarea → name → email → cookies → submit
   .comment-form-comment        { order: 1; }
-  .comment-form-email          { order: 2; }
-  .comment-form-cookies-consent { order: 3; }
-  .form-submit                 { order: 4; }
+  .comment-form-author         { order: 2; }
+  .comment-form-email          { order: 3; }
+  .comment-form-cookies-consent { order: 4; }
+  .form-submit                 { order: 5; }
 
   p {
     margin-bottom: 0;
@@ -232,8 +233,8 @@
   }
 
   input[type="text"],
-  input[type="email"],
   input[type="url"],
+  .comment-form-email input,
   textarea {
     display: block;
     width: 100%;
@@ -270,6 +271,7 @@
   }
 
   // --- Hidden fields in collapsed state ---
+  .comment-form-author,
   .comment-form-email,
   .comment-form-cookies-consent,
   .form-submit {
@@ -289,6 +291,7 @@
       overflow: auto;
     }
 
+    .comment-form-author,
     .comment-form-email,
     .comment-form-cookies-consent,
     .form-submit {
